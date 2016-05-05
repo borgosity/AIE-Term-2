@@ -76,7 +76,8 @@ int GetRightMostSetBit(unsigned int value)
 *****************************************************************************************/
 void PrintBinary(unsigned char value)
 {
-	std::cout << value << " in Binary = ";
+	unsigned int temp = value;
+	std::cout << temp << " in Binary = ";
 	for (int i = 31; i >= 0; i--)
 	{
 		if (value & 1 << i)
@@ -158,7 +159,7 @@ int main()
 
 	PrintBinary(v2);
 	PrintBinary(v6);
-	PrintBinary(v8);
+	PrintBinary(v7);
 
 	std::cout << "finished!! \n\n" << std::endl;
 	std::getc;
