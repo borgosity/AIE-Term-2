@@ -1,12 +1,12 @@
-#include "Matrix3.h"
+#include "Matrix2.h"
 
 
 
-Matrix3::Matrix3()
+Matrix2::Matrix2()
 {
 }
 
 
-Matrix3::~Matrix3()
+Matrix2::~Matrix2()
 {
 }
