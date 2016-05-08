@@ -19,23 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Math_Unit_Test\unittest.h" />
     <ClInclude Include="src\Matrix2.h" />
-    <ClInclude Include="src\Matrix3.h" />
-    <ClInclude Include="src\Matrix4.h" />
     <ClInclude Include="src\Vector2.h" />
-    <ClInclude Include="src\Vector3.h" />
-    <ClInclude Include="src\Vector4.h" />
+    <ClInclude Include="tests\unitTest_v2_m2.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Math_Unit_Test\unittest.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Matrix2.cpp" />
-    <ClCompile Include="src\Matrix3.cpp" />
-    <ClCompile Include="src\Matrix4.cpp" />
     <ClCompile Include="src\Vector2.cpp" />
-    <ClCompile Include="src\Vector3.cpp" />
-    <ClCompile Include="src\Vector4.cpp" />
+    <ClCompile Include="tests\unitTest_v2_m2.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0CE040FC-C7D5-4B57-ABF0-5C09B1B69893}</ProjectGuid>
@@ -92,7 +83,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)build\</IntDir>
-    <IncludePath>$(SolutionDir)Math_Unit_Test\;$(SolutionDir)src\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)tests\;$(SolutionDir)Math_Unit_Test\;$(SolutionDir)src\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -101,7 +92,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)build\</IntDir>
-    <IncludePath>$(SolutionDir)Math_Unit_Test\;$(SolutionDir)src\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(SolutionDir)tests\;$(SolutionDir)Math_Unit_Test\;$(SolutionDir)src\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -113,6 +104,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -141,6 +133,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

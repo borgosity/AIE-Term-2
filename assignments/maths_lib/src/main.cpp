@@ -1,14 +1,11 @@
-// an example main function for the unit test
-#include "unittest.h"
 #include <iostream>
+#include "..\tests\unitTest_v2_m2.h"
 
 int main() {
 
-	if (runUnitTests() == false) {
-		std::cout << "Unit test failed!" << std::endl;
-		return -1;
-	}
+	runTests();
 	std::cout << "All tests passed successfully." << std::endl;
-
+	int i = 0;
+	std::cin >> i;
 	return 0;
 }
