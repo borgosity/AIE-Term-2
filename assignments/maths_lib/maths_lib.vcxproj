@@ -21,11 +21,14 @@
   <ItemGroup>
     <ClInclude Include="src\Matrix2.h" />
     <ClInclude Include="src\Vector2.h" />
+    <ClInclude Include="src\Vector3.h" />
     <ClInclude Include="tests\unitTest_v2_m2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Matrix2.cpp" />
     <ClCompile Include="src\Vector2.cpp" />
+    <ClCompile Include="src\Vector3.cpp" />
     <ClCompile Include="tests\unitTest_v2_m2.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
