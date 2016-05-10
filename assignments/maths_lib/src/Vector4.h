@@ -13,17 +13,25 @@ public:
 	Vector4(float x, float y, float z, float w);
 	Vector4(Vector4 & v4);
 	~Vector4();
+	Vector4 scale(float scaler);
 	Vector4 cross(Vector4 & v4);
 	float dot(Vector4 & v4);
 	float magnitude();
 	void normalise();
-	operator float*();
+	//operator float*();
+
+	// operator overloads
+	Vector4 & operator=(Vector4 & v4);
+	Vector4 & operator+=(const Vector4 & v4b);
+	friend Vector4 operator+ (Vector4 & v4a, Vector4 & v4b);
+	Vector4 & operator-=(const Vector4 & v4b);
+	friend Vector4 operator- (Vector4 & v4a, Vector4 & v4b);
+	Vector4 & operator*=(const Vector4 & v4b);
+	friend Vector4 operator* (Vector4 & v4a, Vector4 & v4b);
+	friend Vector4 operator* (float f, Vector4 & v4);
+	friend Vector4 operator* (Vector4 & v4, float f);
+	//friend Vector4 operator* (Vector4 & v4, Matrix3 & m4);
+	//friend Vector4 operator* (Matrix4 & m4, Vector3 & v4);
 };
-Vector4 operator+ (Vector4 & v4a, Vector4 & v4b);
-Vector4 operator- (Vector4 & v4a, Vector4 & v4b);
-Vector4 operator* (Vector4 & v4a, Vector4 & v4b);
-Vector4 operator* (float f, Vector4 & v4);
-Vector4 operator* (Vector4 & v4, float f);
-Vector4 operator* (Vector4 & v4, Matrix4 & m4);
-Vector4 operator* (Matrix4 & m4, Vector4 & v4);
+
 

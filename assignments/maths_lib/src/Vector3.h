@@ -21,15 +21,15 @@ public:
 	//operator float*();
 
 	// operator oveloads 
-	Vector3 &operator= (Vector3 & v2);
-	Vector3 &operator+= (const Vector3 & v2b);
-	friend Vector3 operator+ (Vector3 & v2a, Vector3 & v2b);
-	Vector3 &operator-= (const Vector3 & v2b);
-	friend Vector3 operator- (Vector3 & v2a, Vector3 & v2b);
-	Vector3 &operator*= (const Vector3 & v2b);
-	friend Vector3 operator* (Vector3 & v2a, Vector3 & v2b);
-	friend Vector3 operator* (float f, Vector3 & v2);
-	friend Vector3 operator* (Vector3 & v2, float f);
+	Vector3 & operator= (Vector3 & v3);
+	Vector3 & operator+= (const Vector3 & v3b);
+	friend Vector3 operator+ (Vector3 & v3a, Vector3 & v3b);
+	Vector3 & operator-= (const Vector3 & v3b);
+	friend Vector3 operator- (Vector3 & v3a, Vector3 & v3b);
+	Vector3 & operator*= (const Vector3 & v3b);
+	friend Vector3 operator* (Vector3 & v3a, Vector3 & v3b);
+	friend Vector3 operator* (float f, Vector3 & v3);
+	friend Vector3 operator* (Vector3 & v3, float f);
 	//friend Vector3 operator* (Vector3 & v3, Matrix3 & m3);
 	//friend Vector3 operator* (Matrix3 & m3, Vector3 & v3);
 };
