@@ -36,9 +36,13 @@ Vector3 Vector3::scale(float scaler)
 
 Vector3 Vector3::cross(Vector3 & v3)
 {
-	m_x = (m_y * v3.m_z) - (m_z * v3.m_y);
-	m_y = (m_z * v3.m_x) - (m_x * v3.m_z);
-	m_z = (m_x * v3.m_y) - (m_y * v3.m_x);
+	float x = (m_y * v3.m_z) - (m_z * v3.m_y);
+	float y = (m_z * v3.m_x) - (m_x * v3.m_z);
+	float z = (m_x * v3.m_y) - (m_y * v3.m_x);
+
+	m_x = x;
+	m_y = y;
+	m_z = z;
 	
 	return *this;
 }

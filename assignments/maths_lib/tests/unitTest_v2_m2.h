@@ -1,2 +1,2 @@
 
-void runTests();
+void runTests_2();

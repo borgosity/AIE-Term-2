@@ -7,7 +7,7 @@ Vector4::Vector4()
 	m_x = 0.0f;
 	m_y = 0.0f;
 	m_z = 0.0f;
-	m_w = 0.0.f
+	m_w = 0.0f;
 }
 
 Vector4::Vector4(float x, float y, float z, float w)
@@ -35,6 +35,21 @@ Vector4 Vector4::scale(float scaler)
 {
 	Vector4 result(scaler * m_x, scaler * m_y, scaler * m_z, scaler * m_w);
 	return result;
+}
+
+Vector4 Vector4::cross(Vector4 & v4)
+{
+	float x = (m_y * v4.m_z) - (m_z * v4.m_y);
+	float y = (m_z * v4.m_x) - (m_x * v4.m_z);
+	float z = (m_x * v4.m_y) - (m_y * v4.m_x);
+	float w = (m_x * v4.m_y) - (m_y * v4.m_x);
+
+	m_x = x;
+	m_y = y;
+	m_z = z;
+	m_w = w;
+
+	return *this;
 }
 
 float Vector4::dot(Vector4 & v4)

@@ -3,7 +3,7 @@
 #include <iostream>
 #include "..\src\Vector2.h"
 
-void test1()
+void test1_initialise()
 {
 	Vector2 * vec1 = new Vector2();
 	Vector2 vec2;
@@ -14,12 +14,12 @@ void test1()
 	std::cout << " vec 2 y = " << vec2.m_y << std::endl;
 }
 
-void test2()
+void test2_becomes()
 {
-	Vector2 * vec1 = new Vector2(3.1, 4.1);
+	Vector2 * vec1 = new Vector2(3.13f, 4.13f);
 
-	float x = 3.2;
-	float y = 4.2;
+	float x = 3.23f;
+	float y = 4.23f;
 	Vector2 vec2(x, y);
 
 	Vector2 vec3 = vec2;
@@ -32,10 +32,10 @@ void test2()
 	std::cout << " vec 3 y = " << vec3.m_y << std::endl;
 }
 
-void test3()
+void test3_scale()
 {
-	float x = 3.2;
-	float y = 4.2;
+	float x = 3.23f;
+	float y = 4.23f;
 	Vector2 vec2(x, y);
 	std::cout << "\n vec 2 x = " << vec2.m_x << std::endl;
 	std::cout << " vec 2 y = " << vec2.m_y << std::endl;
@@ -46,10 +46,10 @@ void test3()
 
 }
 
-void test4()
+void test4_dot()
 {
-	float x = 3.2;
-	float y = 4.2;
+	float x = 3.23f;
+	float y = 4.23f;
 	Vector2 vec2(x, y);
 	std::cout << " \n vec 2 x = " << vec2.m_x << std::endl;
 	std::cout << " vec 2 y = " << vec2.m_y << std::endl;
@@ -63,10 +63,10 @@ void test4()
 
 }
 
-void test5()
+void test5_operators()
 {
-	float x = 3.2;
-	float y = 4.2;
+	float x = 3.23f;
+	float y = 4.23f;
 	Vector2 vec2(x, y);
 	std::cout << " \n vec 2 x = " << vec2.m_x << std::endl;
 	std::cout << " vec 2 y = " << vec2.m_y << std::endl;
@@ -107,14 +107,30 @@ void test5()
 	std::cout << " vec 2*float x = " << vec3.m_x << std::endl;
 	std::cout << " vec 2*float y = " << vec3.m_y << std::endl;
 }
-
-void runTests()
+void test6_normalise()
 {
-	test1();
-	test2();
-	test3();
-	test4();
-	test5();
+	Vector2 v2a(13.5f, -48.23f);
+	v2a.normalise();
+	std::cout << "\n vec normalised x = " << v2a.m_x << std::endl;
+	std::cout << " vec normalised y = " << v2a.m_y << std::endl;
+	std::cout << "                    -0.269548f, -0.962987f" << std::endl;
+}
+void test7_magnitude()
+{
+	Vector2 v2a(13.5f, -48.23f);
+	float mag2 = v2a.magnitude();
+	std::cout << " vec magnitude/length = " << mag2 << std::endl;
+	std::cout << "                        50.0837593079f" << std::endl;
+}
 
+void runTests_2()
+{
+	test1_initialise();
+	test2_becomes();
+	test3_scale();
+	test4_dot();
+	test5_operators();
+	test6_normalise();
+	test7_magnitude();
 
 }
