@@ -23,6 +23,13 @@ Vector3::Vector3(Vector3 & v3)
 	m_z = v3.m_z;
 }
 
+Vector3::Vector3(Vector2 & v2)
+{
+	m_x = v2.m_x;
+	m_y = v2.m_y;
+	m_z = 0.0f;
+}
+
 
 Vector3::~Vector3()
 {
@@ -70,11 +77,26 @@ void Vector3::normalise()
 	m_z = m_z / length;
 }
 
+Vector3::operator float*()
+{
+	float result[3] = { m_x, m_y, m_z };
+	return result;
+}
+
 Vector3 &Vector3::operator=(Vector3 & v3)
 {
 	m_x = v3.m_x;
 	m_y = v3.m_y;
 	m_z = v3.m_z;
+
+	return *this;
+}
+
+Vector3 & Vector3::operator=(Vector2 & v2)
+{
+	m_x = v2.m_x;
+	m_y = v2.m_y;
+	m_z = 0.0f;
 
 	return *this;
 }

@@ -26,6 +26,22 @@ Vector4::Vector4(Vector4 & v4)
 	m_w = v4.m_w;
 }
 
+Vector4::Vector4(Vector3 & v3)
+{
+	m_x = v3.m_x;
+	m_y = v3.m_y;
+	m_z = v3.m_z;
+	m_w = 0.0f;
+}
+
+Vector4::Vector4(Vector2 & v2)
+{
+	m_x = v2.m_x;
+	m_y = v2.m_y;
+	m_z = 0.0f;
+	m_w = 0.0f;
+}
+
 
 Vector4::~Vector4()
 {
@@ -42,7 +58,7 @@ Vector4 Vector4::cross(Vector4 & v4)
 	float x = (m_y * v4.m_z) - (m_z * v4.m_y);
 	float y = (m_z * v4.m_x) - (m_x * v4.m_z);
 	float z = (m_x * v4.m_y) - (m_y * v4.m_x);
-	float w = (m_x * v4.m_y) - (m_y * v4.m_x);
+	float w = 0;
 
 	m_x = x;
 	m_y = y;
@@ -76,12 +92,38 @@ void Vector4::normalise()
 	m_w = m_w / length;
 }
 
+Vector4::operator float*()
+{
+	float result[4] = { m_x, m_y, m_z, m_w };
+	return result;
+}
+
 Vector4 &Vector4::operator=(Vector4 & v4)
 {
 	m_x = v4.m_x;
 	m_y = v4.m_y;
 	m_z = v4.m_z;
 	m_w = v4.m_w;
+
+	return *this;
+}
+
+Vector4 & Vector4::operator=(Vector3 & v3)
+{
+	m_x = v3.m_x;
+	m_y = v3.m_y;
+	m_z = v3.m_z;
+	m_w = 0.0f;
+	
+	return *this;
+}
+
+Vector4 & Vector4::operator=(Vector2 & v2)
+{
+	m_x = v2.m_x;
+	m_y = v2.m_y;
+	m_z = 0.0f;
+	m_w = 0.0f;
 
 	return *this;
 }

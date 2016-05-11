@@ -53,6 +53,12 @@ void Vector2::normalise()
 	m_y = m_y / length;
 }
 
+Vector2::operator float*()
+{
+	float result[2] = { m_x, m_y };
+	return result;
+}
+
 Vector2 &Vector2::operator=(Vector2 & v2)
 {
 	m_x = v2.m_x;

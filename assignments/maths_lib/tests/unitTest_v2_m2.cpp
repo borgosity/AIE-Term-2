@@ -109,7 +109,7 @@ void test5_operators()
 }
 void test6_normalise()
 {
-	Vector2 v2a(13.5f, -48.23f);
+	Vector2 v2a(-13.5f, -48.23f);
 	v2a.normalise();
 	std::cout << "\n vec normalised x = " << v2a.m_x << std::endl;
 	std::cout << " vec normalised y = " << v2a.m_y << std::endl;

@@ -36,6 +36,12 @@
     <ClInclude Include="tests\unitTest_v3_m3.h">
       <Filter>Unit Tests</Filter>
     </ClInclude>
+    <ClInclude Include="tests\unitTest_v4_m4.h">
+      <Filter>Unit Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="Math_Unit_Test\vectorTest.h">
+      <Filter>Unit Tests</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -57,6 +63,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="tests\unitTest_v3_m3.cpp">
+      <Filter>Unit Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="tests\unitTest_v4_m4.cpp">
+      <Filter>Unit Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Math_Unit_Test\vectorTest.cpp">
       <Filter>Unit Tests</Filter>
     </ClCompile>
   </ItemGroup>

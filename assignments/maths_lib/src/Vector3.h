@@ -1,4 +1,5 @@
 #pragma once
+#include "Vector2.h"
 #include "Matrix3.h"
 #include <math.h>
 
@@ -12,6 +13,7 @@ public:
 	Vector3();
 	Vector3(float x, float y, float z);
 	Vector3(Vector3 & v3);
+	Vector3(Vector2 & v2);
 	~Vector3();
 
 	Vector3 scale(float scaler);
@@ -19,10 +21,11 @@ public:
 	float dot(Vector3 & v3);
 	float magnitude();
 	void normalise();
-	//operator float*();
+	operator float*();
 
 	// operator oveloads 
 	Vector3 & operator= (Vector3 & v3);
+	Vector3 & operator= (Vector2 & v2);
 	Vector3 & operator+= (const Vector3 & v3b);
 	friend Vector3 operator+ (Vector3 & v3a, Vector3 & v3b);
 	Vector3 & operator-= (const Vector3 & v3b);

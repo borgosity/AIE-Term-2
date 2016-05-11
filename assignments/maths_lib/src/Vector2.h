@@ -17,7 +17,7 @@ public:
 	float dot(Vector2 & v2);
 	float magnitude();
 	void normalise();
-	//operator float*();
+	operator float*();
 
 	// operator oveloads 
 	Vector2 &operator= (Vector2 & v2);
