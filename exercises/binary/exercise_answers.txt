@@ -1,0 +1,252 @@
+1.---------------
+1 = 001
+42 = 101010
+256 = 100000000
+4,294,967,296 = 1000,0000,0000,0000,0000,0000,0000,0000
+
+2.---------------
+128| 64| 32| 16|  8|  4|  2|  1|
+---|---|---|---|---|---|---|---|
+  1|  0|  0|  0|  0|  0|  0|  0| = 128
+  1|  0|  1|  0|  1|  0|  1|  0| = 128, 32, 8, 2 = 170
+  1|  1|  1|  1|  0|  0|  0|  0| = 128, 64, 32, 16 = 240
+  1|  1|  0|  0|  1|  1|  0|  0| = 128, 64, 8, 4 = 204
+
+3.---------------
+0111 +
+0111 =
+1110
+
+01010 +
+01010 =
+10100
+
+011101 +
+001010 =
+100111
+
+1101 -
+0011 =
+1010
+
+10001 -
+00100 =
+01101
+
+0101 x
+0010 =
+1010
+
+001011 x
+000011 =
+100001
+
+01011 /
+00011 =
+00011 r 010
+
+4.---------------------
+In many places, numbers stored in computers are displayed as hexadecimal (base 16). What
+advantages do hex numbers have over decimal and binary numbers respectively when
+displaying numbers stored in a computer?
+
+The main advantage of hexadecimal over binary and denary is that it 
+can display large numbers in a more compact fashion.
+It is used to make binary more human readable.
+
+- Denary 
+	1048563
+- Hexidecimal
+	FFFF3
+- Binary
+	1111 1111 1111 1111 0011
+	
+- hex to denary
+(15 * 16^4) + (15 * 16^3) + (15 * 16^2) + (15 * 16^1) + (15 * 16^0)
+(15 * 65536) (15 * 4096) (15 * 256) (15*16) (3 * 1)
+983040 + 61440 + 3840 + 240 + 3
+= 1048563
+
+5.--------------------------
+Using Two's complement convert the following between decimal and binary (for binary use 1
+signed byte)
+
+ 1000 0000
+1111 1111 - minus 1
+0000 0000 - inverted
+not 0, apparently -128 - denary number
+
+ 1010 1010
+1010 1001 - minus 1
+0101 0110 - inverted
+1x64 0x32 1x16 0x8 1x4 1x2 0x1
+-86 - denary number
+
+ 1111 0000
+1110 1111 - minus 1
+0001 0000 - inverted
+-16 - denary number
+
+ 1100 1100
+1100 1011 - minus 1
+0011 0100 - inverted
+32 + 16 + 4 
+= -42 - denary number
+
+ -16
+00010000 - positve number
+11101111 - inverted
+11110000 - +1
+
+ 128
+- not a valid 8 bit number
+positve numbers - 0 to 127
+negative numbers - -1 to -128
+
+ -128
+1000 0000 - positve number
+0111 1111 - inverted
+1000 0000 - +1
+
+ -123
+01111011 - positve number
+10000100 - inverted
+10000101 - +1
+
+6.--------------------------
+What do each of these evaluate to?
+ 11111 | 11111 - Bitwise OR, set 1 unless both 0
+11111
+11111 =
+11111
+
+ 11111 ^ 11111 - bitwise XOR, set 1 if both the same
+11111
+11111 =
+11111
+
+
+ 10101 & 11111 - bitwise AND, set 1 if both are set
+10101
+11111 = 
+10101
+
+
+ 10101 | 11111 - Bitwise OR, set 1 unless both 0
+10101
+11111 =
+11111
+
+ 00000 ^ 11111 - bitwise XOR, set 1 if both the same
+00000
+11111 =
+00000
+
+ 1 << 3 - shift 3 bits left
+0000 0001 (1)
+0000 1000 (8)
+
+ 100 >> 2 - shift 2 bits right
+0110 0100 (100)
+0001 1001 (25)
+
+ ~10101 - bitwise NOT, invert bits
+01010
+
+ 100 << 1 - shift 1 bits left
+0110 0100 (100)
+1100 1000 (200)
+
+ 1010 >> 1 - shift 1 bits right
+0000 0011 1111 0010 (1010)
+0000 0001 1111 1001 (505)
+
+ ~11111 - bitwise NOT, invert bits
+00000
+
+7. -------------------------------------------
+A true/false value can be stored in a single bit – zero for false, one for true. However, the
+Boolean type in C is a full byte big – 8 bits. This means it is possible to store 8 bits in a single
+byte. Using bitwise operators, how might you
+
+ Set an single bit to 0
+ - use a bitwise AND to flip a bit
+ - get the byte and AND it against a byte reduced by the number of the byte
+ - 1111 1111 & 1111 1110
+ = 1111 1110  
+ Set an single bit to 1
+ - use a bitwise XOR to flip a bit
+ - get they byte and XOR it against itself
+ - 1111 1110 ^ 1111 1110
+ = 1111 1111
+ Check the value of a single bit
+
+
+8.----------------------------------------------
+Implement the following functions in C++
+
+ bool IsLeftMostBitSet(unsigned int value)
+Returns true if the left most (the most significant) bit of value is set and
+false otherwise
+
+ bool IsRightMostBitSet(unsigned int value)
+Returns true if the right most (the least significant) bit of value is set and
+false otherwise
+
+ bool IsBitSet(unsigned int value, unsigned char bit_to_check)
+Returns true if the asked for bit is set, and false otherwise. bit_to_check is
+zero indexed from the right most bit. i.e 0 is the right most bit and 31 is the
+left most.
+
+ int GetRightMostSetBit(unsigned int value)
+- This function returns the index of the right most bit set to 1 in value
+- If no bits are set, it returns -1
+- For example
+o 00000001 would return 0
+o 10011100 would return 2
+o 01010000 would return 4
+o 00000000 would return -1
+
+ void PrintBinary(unsigned char value)
+- Prints value to the console as a binary number
+
+ CHALLENGE: bool IsPowerOf2(unsigned int value)
+- Returns true of value is a power of 2 and false otherwise. Use only bitwise
+and arithmetic operators.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

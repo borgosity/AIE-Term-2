@@ -1,0 +1,22 @@
+
+Configuration <All Config>
+Config Properties
+- General
+-- Output Directory = $(ProjectDir)bin\
+-- Intermediate Directory = $(ProjectDir)build\$(Configuration)\
+** Optional (if no interational deployment)
+-- Character Set = Multi-Byte Character Set
+
+- VC++ Directories
+-- Include Directories = $(ProjectDir)<include directory>\
+-- Source Directory = $(ProjectDir)src\
+
+Configuration <Debug>
+C/C++
+- Code Generation
+-- Runtime Library = Multi-threaded Debug (/MTd)
+
+Configuration <Debug>
+C/C++
+- Code Generation
+-- Runtime Library = Multi-threaded (/MT)
