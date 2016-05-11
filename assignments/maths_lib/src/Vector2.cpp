@@ -37,6 +37,22 @@ float Vector2::dot(Vector2 & v2)
 	return result;
 }
 
+float Vector2::magnitude()
+{
+	float result;
+
+	result = sqrt((m_x * m_x) + (m_y * m_y));
+
+	return result;
+}
+
+void Vector2::normalise()
+{
+	float length = this->magnitude();
+	m_x = m_x / length;
+	m_y = m_y / length;
+}
+
 Vector2 &Vector2::operator=(Vector2 & v2)
 {
 	m_x = v2.m_x;

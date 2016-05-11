@@ -1,5 +1,6 @@
 #pragma once
 #include "Matrix3.h"
+#include <math.h>
 
 class Vector3
 {

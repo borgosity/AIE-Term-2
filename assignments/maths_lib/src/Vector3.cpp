@@ -34,10 +34,36 @@ Vector3 Vector3::scale(float scaler)
 	return result;
 }
 
+Vector3 Vector3::cross(Vector3 & v3)
+{
+	m_x = (m_y * v3.m_z) - (m_z * v3.m_y);
+	m_y = (m_z * v3.m_x) - (m_x * v3.m_z);
+	m_z = (m_x * v3.m_y) - (m_y * v3.m_x);
+	
+	return *this;
+}
+
 float Vector3::dot(Vector3 & v3)
 {
 	float result = (m_x * v3.m_x) + (m_y * v3.m_y) + (m_z * v3.m_z);
 	return result;
+}
+
+float Vector3::magnitude()
+{
+	float result;
+
+	result = sqrt((m_x * m_x) + (m_y * m_y) + (m_z * m_z));
+
+	return result;
+}
+
+void Vector3::normalise()
+{
+	float length = this->magnitude();
+	m_x = m_x / length;
+	m_y = m_y / length;
+	m_z = m_z / length;
 }
 
 Vector3 &Vector3::operator=(Vector3 & v3)

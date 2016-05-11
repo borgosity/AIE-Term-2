@@ -43,6 +43,24 @@ float Vector4::dot(Vector4 & v4)
 	return result;
 }
 
+float Vector4::magnitude()
+{
+	float result;
+
+	result = sqrt((m_x * m_x) + (m_y * m_y) + (m_z * m_z) + (m_w * m_w));
+
+	return result;
+}
+
+void Vector4::normalise()
+{
+	float length = this->magnitude();
+	m_x = m_x / length;
+	m_y = m_y / length;
+	m_z = m_z / length;
+	m_w = m_w / length;
+}
+
 Vector4 &Vector4::operator=(Vector4 & v4)
 {
 	m_x = v4.m_x;

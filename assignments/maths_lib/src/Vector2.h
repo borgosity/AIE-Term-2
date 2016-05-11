@@ -1,5 +1,6 @@
 #pragma once
 //#include "Matrix2.h"
+#include <math.h>
 
 class Vector2
 {
@@ -13,7 +14,6 @@ public:
 	~Vector2();
 
 	Vector2 scale(float scaler);
-	Vector2 cross(Vector2 & v2);
 	float dot(Vector2 & v2);
 	float magnitude();
 	void normalise();
