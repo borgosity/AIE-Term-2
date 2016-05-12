@@ -130,16 +130,16 @@ Vector2 operator*(Vector2 & v2, float f)
 
 //Vector2 operator*(Vector2 & v2, Matrix2 & m2)
 //{
-//	Vector2 result;
-//	result.m_x = v2.m_x * m2.column[0]->m_x + v2.m_y * m2.column[0]->m_y;
-//	result.m_y = v2.m_x * m2.column[1]->m_x + v2.m_y * m2.column[1]->m_y;
+//	Vector2 result(0.0f, 0.0f);
+//	result.m_x = v2.m_x * m2.m_column1->m_x + v2.m_y * m2.m_column1->m_y;
+//	result.m_y = v2.m_x * m2.m_column2->m_x + v2.m_y * m2.m_column2->m_y;
 //	return result;
 //}
 //
 //Vector2 operator*(Matrix2 & m2, Vector2 & v2)
 //{
-//	Vector2 result;
-//	//result.m_x = m2.column1.m_x * v2.m_x + m2.column1.m_y * v2.m_y;
-//	//result.m_y = m2.column2.m_x * v2.m_x + m2.column2.m_y * v2.m_y;
+//	Vector2 result(0.0f, 0.0f);
+//	result.m_x = m2.m_column1->m_x * v2.m_x + m2.m_column1->m_y * v2.m_y;
+//	result.m_y = m2.m_column2->m_x * v2.m_x + m2.m_column2->m_y * v2.m_y;
 //	return result;
 //}

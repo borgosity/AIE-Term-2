@@ -29,8 +29,8 @@ public:
 	friend Vector2 operator* (Vector2 & v2a, Vector2 & v2b);
 	friend Vector2 operator* (float f, Vector2 & v2);
 	friend Vector2 operator* (Vector2 & v2, float f);
-//	friend Vector2 operator* (Vector2 & v2, Matrix2 & m2);
-//	friend Vector2 operator* (Matrix2 & m2, Vector2 & v2);
+	//friend Vector2 operator* (Vector2 & v2, Matrix2 & m2);
+	//friend Vector2 operator* (Matrix2 & m2, Vector2 & v2);
 };
 
 

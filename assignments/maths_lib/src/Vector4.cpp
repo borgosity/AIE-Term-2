@@ -78,7 +78,7 @@ float Vector4::magnitude()
 {
 	float result;
 
-	result = sqrt((m_x * m_x) + (m_y * m_y) + (m_z * m_z) + (m_w * m_w));
+	result = (float)sqrt((m_x * m_x) + (m_y * m_y) + (m_z * m_z) + (m_w * m_w));
 
 	return result;
 }

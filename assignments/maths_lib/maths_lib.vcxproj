@@ -19,8 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Math_Unit_Test\matrixTest.h" />
     <ClInclude Include="Math_Unit_Test\vectorTest.h" />
+    <ClInclude Include="src\Includes.h" />
     <ClInclude Include="src\Matrix2.h" />
+    <ClInclude Include="src\Matrix3.h" />
+    <ClInclude Include="src\Matrix4.h" />
     <ClInclude Include="src\Vector2.h" />
     <ClInclude Include="src\Vector3.h" />
     <ClInclude Include="src\Vector4.h" />
@@ -29,9 +33,12 @@
     <ClInclude Include="tests\unitTest_v4_m4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Math_Unit_Test\matrixTest.cpp" />
     <ClCompile Include="Math_Unit_Test\vectorTest.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Matrix2.cpp" />
+    <ClCompile Include="src\Matrix3.cpp" />
+    <ClCompile Include="src\Matrix4.cpp" />
     <ClCompile Include="src\Vector2.cpp" />
     <ClCompile Include="src\Vector3.cpp" />
     <ClCompile Include="src\Vector4.cpp" />
@@ -98,6 +105,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(ProjectDir)bin\</OutDir>
+    <IntDir>$(ProjectDir)build\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir)src\;$(ProjectDir)tests\;$(ProjectDir)Math_Unit_Test\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -107,6 +117,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)bin\</OutDir>
+    <IntDir>$(ProjectDir)build\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir)src\;$(ProjectDir)tests\;$(ProjectDir)Math_Unit_Test\;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
