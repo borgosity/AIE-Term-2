@@ -20,20 +20,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math_Unit_Test\matrixTest.h" />
+    <ClInclude Include="Math_Unit_Test\unittest.h" />
     <ClInclude Include="Math_Unit_Test\vectorTest.h" />
-    <ClInclude Include="src\Includes.h" />
-    <ClInclude Include="src\Matrix2.h" />
-    <ClInclude Include="src\Matrix3.h" />
-    <ClInclude Include="src\Matrix4.h" />
-    <ClInclude Include="src\Vector2.h" />
-    <ClInclude Include="src\Vector3.h" />
-    <ClInclude Include="src\Vector4.h" />
+    <ClInclude Include="src\MtxVec2.h" />
+    <ClInclude Include="src\MtxVec3.h" />
+    <ClInclude Include="src\MtxVec4.h" />
     <ClInclude Include="tests\unitTest_v2_m2.h" />
     <ClInclude Include="tests\unitTest_v3_m3.h" />
     <ClInclude Include="tests\unitTest_v4_m4.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math_Unit_Test\matrixTest.cpp" />
+    <ClCompile Include="Math_Unit_Test\unittest.cpp" />
     <ClCompile Include="Math_Unit_Test\vectorTest.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Matrix2.cpp" />

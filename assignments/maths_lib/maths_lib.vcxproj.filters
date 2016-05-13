@@ -18,20 +18,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Matrix2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Vector2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="tests\unitTest_v2_m2.h">
       <Filter>Unit Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Vector3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Vector4.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tests\unitTest_v3_m3.h">
       <Filter>Unit Tests</Filter>
@@ -45,14 +33,17 @@
     <ClInclude Include="Math_Unit_Test\matrixTest.h">
       <Filter>Unit Tests</Filter>
     </ClInclude>
-    <ClInclude Include="src\Matrix3.h">
+    <ClInclude Include="src\MtxVec2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Matrix4.h">
+    <ClInclude Include="src\MtxVec3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Includes.h">
+    <ClInclude Include="src\MtxVec4.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Math_Unit_Test\unittest.h">
+      <Filter>Unit Tests</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="src\Matrix4.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Math_Unit_Test\unittest.cpp">
+      <Filter>Unit Tests</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

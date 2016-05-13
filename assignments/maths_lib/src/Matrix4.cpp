@@ -1,8 +1,9 @@
-#include "Matrix4.h"
+#include "MtxVec4.h"
 #include <math.h>
 
+/***************************************************************************
 
-
+***************************************************************************/
 Matrix4::Matrix4()
 {
 	m_column1->m_x = 0.0f;
@@ -25,7 +26,9 @@ Matrix4::Matrix4()
 	m_column4->m_z = 0.0f;
 	m_column4->m_w = 0.0f;
 }
+/***************************************************************************
 
+***************************************************************************/
 Matrix4::Matrix4(int a)
 {
 	float fa = (float)a;
@@ -50,8 +53,13 @@ Matrix4::Matrix4(int a)
 	m_column4->m_z = fa;
 	m_column4->m_w = fa;
 }
+/***************************************************************************
 
-Matrix4::Matrix4(float c1x, float c1y, float c1z, float c1w, float c2x, float c2y, float c2z, float c2w, float c3x, float c3y, float c3z, float c3w, float c4x, float c4y, float c4z, float c4w)
+***************************************************************************/
+Matrix4::Matrix4(float c1x, float c1y, float c1z, float c1w, 
+				 float c2x, float c2y, float c2z, float c2w, 
+				 float c3x, float c3y, float c3z, float c3w, 
+				 float c4x, float c4y, float c4z, float c4w)
 {
 	m_column1->m_x = c1x;
 	m_column1->m_y = c1y;
@@ -73,7 +81,9 @@ Matrix4::Matrix4(float c1x, float c1y, float c1z, float c1w, float c2x, float c2
 	m_column4->m_z = c1z;
 	m_column4->m_w = c1w;
 }
+/***************************************************************************
 
+***************************************************************************/
 Matrix4::Matrix4(Vector4 & c1v, Vector4 & c2v, Vector4 & c3v, Vector4 & c4v)
 {
 	m_column1 = &c1v;
@@ -81,7 +91,9 @@ Matrix4::Matrix4(Vector4 & c1v, Vector4 & c2v, Vector4 & c3v, Vector4 & c4v)
 	m_column3 = &c3v;
 	m_column3 = &c4v;
 }
+/***************************************************************************
 
+***************************************************************************/
 Matrix4::Matrix4(Matrix4 & m4)
 {
 	m_column1 = m4.m_column1;
@@ -89,11 +101,15 @@ Matrix4::Matrix4(Matrix4 & m4)
 	m_column3 = m4.m_column3;
 	m_column4 = m4.m_column4;
 }
+/***************************************************************************
 
+***************************************************************************/
 Matrix4::~Matrix4()
 {
 }
+/***************************************************************************
 
+***************************************************************************/
 void Matrix4::setRotateX(float x)
 {
 	//c1x = 1, c1y = 0      , c1z = 0	  , c1w = 0
@@ -121,7 +137,9 @@ void Matrix4::setRotateX(float x)
 	m_column4->m_z = 0.0f;
 	m_column4->m_w = 0.0f;
 }
+/***************************************************************************
 
+***************************************************************************/
 void Matrix4::setRotateY(float y)
 {
 	//c1x = cos(y), c1y = 0, c1z = -sin(y), c1w = 0
@@ -131,7 +149,7 @@ void Matrix4::setRotateY(float y)
 
 	m_column1->m_x = (float)cos(y);
 	m_column1->m_y = 0.0f;
-	m_column1->m_z = 0.0f;
+	m_column1->m_z = (float)-sin(y);
 	m_column1->m_w = 0.0f;
 
 	m_column2->m_x = 0.0f;
@@ -149,7 +167,9 @@ void Matrix4::setRotateY(float y)
 	m_column4->m_z = 0.0f;
 	m_column4->m_w = 0.0f;
 }
+/***************************************************************************
 
+***************************************************************************/
 void Matrix4::setRotateZ(float z)
 {
 	//c1x = cos(y) , c1y = sin(y), c1z = 0, c1w = 0
@@ -162,8 +182,8 @@ void Matrix4::setRotateZ(float z)
 	m_column1->m_z = 0.0f;
 	m_column1->m_w = 0.0f;
 
-	m_column2->m_x = (float)cos(z);
-	m_column2->m_y = (float)sin(z);
+	m_column2->m_x = (float)-sin(z);
+	m_column2->m_y = (float)cos(z);
 	m_column2->m_z = 0.0f;
 	m_column3->m_w = 0.0f;
 
@@ -177,7 +197,9 @@ void Matrix4::setRotateZ(float z)
 	m_column4->m_z = 0.0f;
 	m_column4->m_w = 0.0f;
 }
+/***************************************************************************
 
+***************************************************************************/
 Matrix4 & Matrix4::operator=(Matrix4 & m4)
 {
 	m_column1 = m4.m_column1;
@@ -187,7 +209,9 @@ Matrix4 & Matrix4::operator=(Matrix4 & m4)
 
 	return *this;
 }
+/***************************************************************************
 
+***************************************************************************/
 Matrix4::operator float*()
 {
 	float result[16] = { m_column1->m_x, m_column1->m_y, m_column1->m_z, m_column1->m_w,
@@ -196,7 +220,9 @@ Matrix4::operator float*()
 						 m_column4->m_x, m_column4->m_y, m_column4->m_z, m_column4->m_w, };
 	return result;
 }
+/***************************************************************************
 
+***************************************************************************/
 Matrix4 & Matrix4::operator*=(const Matrix4 & m4b)
 {
 	m_column1->m_x = m4b.m_column1->m_x;
@@ -216,7 +242,9 @@ Matrix4 & Matrix4::operator*=(const Matrix4 & m4b)
 
 	return *this;
 }
+/***************************************************************************
 
+***************************************************************************/
 Matrix4 operator*(Matrix4 & m4a, Matrix4 & m4b)
 {
 	Matrix4 result(m4a);

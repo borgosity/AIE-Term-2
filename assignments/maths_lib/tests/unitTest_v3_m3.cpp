@@ -1,7 +1,7 @@
 #include "unitTest_v3_m3.h"
 
 #include <iostream>
-#include "..\src\Vector3.h"
+#include "MtxVec3.h"
 
 void v3test1_initialise()
 {

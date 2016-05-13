@@ -1,12 +1,9 @@
 #pragma once
 
 // YOUR INCLUDES HERE
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Vector4.h"
-#include "Matrix2.h"
-#include "Matrix3.h"
-#include "Matrix4.h"
+#include "MtxVec2.h"
+#include "MtxVec3.h"
+#include "MtxVec4.h"
 
 // TYPEDEFS IF NEEDED
 // typedef glm::vec2 Vector2; etc

@@ -1,7 +1,7 @@
 #include "unitTest_v2_m2.h"
-
 #include <iostream>
-#include "..\src\Vector2.h"
+
+#include "MTXVec2.h"
 
 void test1_initialise()
 {

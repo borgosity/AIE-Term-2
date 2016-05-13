@@ -194,8 +194,8 @@ bool runUnitTests() {
 	v4a = Vector4(13.5f, -48.23f, 862, 0); v4b = Vector4(5, 3.99f, -12, 1);
 	v4c = v4a.cross(v4b);
 
-	TEST("Vector3 cross", v3c, Vector3(-2860.62011719f, 295.014984131f, 295.014984131f));
-	TEST("Vector4 cross", v4c, Vector4(-2860.62011719f, 295.014984131f, 295.014984131f, 0));
+	TEST("Vector3 cross", v3c, Vector3(-2860.62011719f, 4472, 295.014984131f));
+	TEST("Vector4 cross", v4c, Vector4(-2860.62011719f, 4472, 295.014984131f, 0));
 
 	// vector magnitude
 	v2a = Vector2(13.5f, -48.23f);
