@@ -231,20 +231,30 @@ Matrix4::operator float*()
 ***************************************************************************/
 Matrix4 & Matrix4::operator*=(const Matrix4 & m4b)
 {
-	m_column1->m_x = m4b.m_column1->m_x;
-	m_column1->m_y = m4b.m_column1->m_y;
-	m_column1->m_z = m4b.m_column1->m_z;
-	m_column1->m_w = m4b.m_column1->m_w;
+	Matrix4 result(0);
 
-	m_column2->m_x = m4b.m_column2->m_x;
-	m_column2->m_y = m4b.m_column2->m_y;
-	m_column2->m_z = m4b.m_column2->m_z;
-	m_column2->m_w = m4b.m_column2->m_w;
+	result.m_column1->m_x = (this->m_column1->m_x * m4b.m_column1->m_x) + (this->m_column2->m_x * m4b.m_column1->m_y) + (this->m_column3->m_x * m4b.m_column1->m_z) + (this->m_column4->m_x * m4b.m_column1->m_w);
+	result.m_column1->m_y = (this->m_column1->m_y * m4b.m_column1->m_x) + (this->m_column2->m_y * m4b.m_column1->m_y) + (this->m_column3->m_y * m4b.m_column1->m_z) + (this->m_column4->m_y * m4b.m_column1->m_w);
+	result.m_column1->m_z = (this->m_column1->m_z * m4b.m_column1->m_x) + (this->m_column2->m_z * m4b.m_column1->m_y) + (this->m_column3->m_z * m4b.m_column1->m_z) + (this->m_column4->m_z * m4b.m_column1->m_w);
+	result.m_column1->m_w = (this->m_column1->m_w * m4b.m_column1->m_x) + (this->m_column2->m_w * m4b.m_column1->m_y) + (this->m_column3->m_w * m4b.m_column1->m_z) + (this->m_column4->m_w * m4b.m_column1->m_w);
 
-	m_column3->m_x = m4b.m_column3->m_x;
-	m_column3->m_y = m4b.m_column3->m_y;
-	m_column3->m_z = m4b.m_column3->m_z;
-	m_column3->m_w = m4b.m_column3->m_w;
+	result.m_column2->m_x = (this->m_column1->m_x * m4b.m_column2->m_x) + (this->m_column2->m_x * m4b.m_column2->m_y) + (this->m_column3->m_x * m4b.m_column2->m_z) + (this->m_column4->m_x * m4b.m_column2->m_w);
+	result.m_column2->m_y = (this->m_column1->m_y * m4b.m_column2->m_x) + (this->m_column2->m_y * m4b.m_column2->m_y) + (this->m_column3->m_y * m4b.m_column2->m_z) + (this->m_column4->m_y * m4b.m_column2->m_w);
+	result.m_column2->m_z = (this->m_column1->m_z * m4b.m_column2->m_x) + (this->m_column2->m_z * m4b.m_column2->m_y) + (this->m_column3->m_z * m4b.m_column2->m_z) + (this->m_column4->m_z * m4b.m_column2->m_w);
+	result.m_column2->m_w = (this->m_column1->m_w * m4b.m_column2->m_x) + (this->m_column2->m_w * m4b.m_column2->m_y) + (this->m_column3->m_w * m4b.m_column2->m_z) + (this->m_column4->m_w * m4b.m_column2->m_w);
+
+	result.m_column3->m_x = (this->m_column1->m_x * m4b.m_column3->m_x) + (this->m_column2->m_x * m4b.m_column3->m_y) + (this->m_column3->m_x * m4b.m_column3->m_z) + (this->m_column4->m_x * m4b.m_column3->m_w);
+	result.m_column3->m_y = (this->m_column1->m_y * m4b.m_column3->m_x) + (this->m_column2->m_y * m4b.m_column3->m_y) + (this->m_column3->m_y * m4b.m_column3->m_z) + (this->m_column4->m_y * m4b.m_column3->m_w);
+	result.m_column3->m_z = (this->m_column1->m_z * m4b.m_column3->m_x) + (this->m_column2->m_z * m4b.m_column3->m_y) + (this->m_column3->m_z * m4b.m_column3->m_z) + (this->m_column4->m_z * m4b.m_column3->m_w);
+	result.m_column3->m_w = (this->m_column1->m_w * m4b.m_column3->m_x) + (this->m_column2->m_w * m4b.m_column3->m_y) + (this->m_column3->m_w * m4b.m_column3->m_z) + (this->m_column4->m_w * m4b.m_column3->m_w);
+
+	result.m_column4->m_x = (this->m_column1->m_x * m4b.m_column4->m_x) + (this->m_column2->m_x * m4b.m_column4->m_y) + (this->m_column3->m_x * m4b.m_column4->m_z) + (this->m_column4->m_x * m4b.m_column4->m_w);
+	result.m_column4->m_y = (this->m_column1->m_y * m4b.m_column4->m_x) + (this->m_column2->m_y * m4b.m_column4->m_y) + (this->m_column3->m_y * m4b.m_column4->m_z) + (this->m_column4->m_y * m4b.m_column4->m_w);
+	result.m_column4->m_z = (this->m_column1->m_z * m4b.m_column4->m_x) + (this->m_column2->m_z * m4b.m_column4->m_y) + (this->m_column3->m_z * m4b.m_column4->m_z) + (this->m_column4->m_z * m4b.m_column4->m_w);
+	result.m_column4->m_w = (this->m_column1->m_w * m4b.m_column4->m_x) + (this->m_column2->m_w * m4b.m_column4->m_y) + (this->m_column3->m_w * m4b.m_column4->m_z) + (this->m_column4->m_w * m4b.m_column4->m_w);
+
+
+	*this = result;
 
 	return *this;
 }

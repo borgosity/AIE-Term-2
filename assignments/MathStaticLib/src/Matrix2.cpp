@@ -103,11 +103,15 @@ Matrix2::operator float*()
 ***************************************************************************/
 Matrix2 & Matrix2::operator*=(const Matrix2 & m2b)
 {
-	m_column1->m_x *= m2b.m_column1->m_x;
-	m_column1->m_y *= m2b.m_column1->m_y;
+	Matrix2 result(0);
 
-	m_column2->m_x *= m2b.m_column2->m_x;
-	m_column2->m_y *= m2b.m_column2->m_y;
+	result.m_column1->m_x = (this->m_column1->m_x * m2b.m_column1->m_x) + (this->m_column2->m_x * m2b.m_column1->m_y);
+	result.m_column1->m_y = (this->m_column1->m_y * m2b.m_column1->m_x) + (this->m_column2->m_y * m2b.m_column1->m_y);
+
+	result.m_column2->m_x = (this->m_column1->m_x * m2b.m_column2->m_x) + (this->m_column2->m_x * m2b.m_column2->m_y);
+	result.m_column2->m_y = (this->m_column1->m_y * m2b.m_column2->m_x) + (this->m_column2->m_y * m2b.m_column2->m_y);
+
+	*this = result;
 
 	return *this;
 }
@@ -118,14 +122,7 @@ Matrix2 operator*(Matrix2 & m2a, Matrix2 & m2b)
 {
 	Matrix2 result(m2a);
 
-	//result *= m2b;
-
-	result.m_column1->m_x = (m2a.m_column1->m_x * m2b.m_column1->m_x) +	(m2a.m_column2->m_x * m2b.m_column1->m_y);
-	result.m_column1->m_y = (m2a.m_column1->m_y * m2b.m_column1->m_x) + (m2a.m_column2->m_y * m2b.m_column1->m_y);
-
-	result.m_column2->m_x = (m2a.m_column1->m_x * m2b.m_column2->m_x) + (m2a.m_column2->m_x * m2b.m_column2->m_y);
-	result.m_column2->m_y = (m2a.m_column1->m_y * m2b.m_column2->m_x) + (m2a.m_column2->m_y * m2b.m_column2->m_y);
-
+	result *= m2b;
 
 	return result;
 }
