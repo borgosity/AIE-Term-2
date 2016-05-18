@@ -176,17 +176,18 @@ Matrix3::operator float*()
 ***************************************************************************/
 Matrix3 & Matrix3::operator*=(const Matrix3 & m3b)
 {
-	m_column1->m_x = m3b.m_column1->m_x;
-	m_column1->m_y = m3b.m_column1->m_y;
-	m_column1->m_z = m3b.m_column1->m_z;
+	Matrix3 result(0);
 
-	m_column2->m_x = m3b.m_column2->m_x;
-	m_column2->m_y = m3b.m_column2->m_y;
-	m_column2->m_z = m3b.m_column2->m_z;
+	result.m_column1->m_x = (this->m_column1->m_x * m3b.m_column1->m_x) + (this->m_column2->m_x * m3b.m_column1->m_y) + (this->m_column3->m_x * m3b.m_column1->m_z);
+	result.m_column1->m_y = (this->m_column1->m_y * m3b.m_column1->m_x) + (this->m_column2->m_y * m3b.m_column1->m_y) + (this->m_column3->m_y * m3b.m_column1->m_z);
 
-	m_column3->m_x = m3b.m_column3->m_x;
-	m_column3->m_y = m3b.m_column3->m_y;
-	m_column3->m_z = m3b.m_column3->m_z;
+	result.m_column2->m_x = (this->m_column1->m_x * m3b.m_column2->m_x) + (this->m_column2->m_x * m3b.m_column2->m_y) + (this->m_column3->m_x * m3b.m_column2->m_z);
+	result.m_column2->m_y = (this->m_column1->m_y * m3b.m_column2->m_x) + (this->m_column2->m_y * m3b.m_column2->m_y) + (this->m_column3->m_y * m3b.m_column2->m_z);
+
+	result.m_column3->m_x = (this->m_column1->m_x * m3b.m_column3->m_x) + (this->m_column2->m_x * m3b.m_column3->m_y) + (this->m_column2->m_x * m3b.m_column3->m_z);
+	result.m_column3->m_y = (this->m_column1->m_y * m3b.m_column3->m_x) + (this->m_column2->m_y * m3b.m_column3->m_y) + (this->m_column2->m_y * m3b.m_column3->m_z);
+
+	*this = result;
 
 	return *this;
 }
