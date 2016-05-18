@@ -1,0 +1,10 @@
+
+
+c/c++
+-- Addtional Include Directories = $(ProjectDir)lib\
+
+Linker
+-- Addtional Library Directories = $(ProjectDir)lib\
+
+- Input
+-- Addtional Dependencies = math_lib.lib;

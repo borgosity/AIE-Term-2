@@ -10,6 +10,7 @@ Config Properties
 - VC++ Directories
 -- Include Directories = $(ProjectDir)<include directory>\
 -- Source Directory = $(ProjectDir)src\
+-- Library Directory = $(ProjectDir)lib\
 
 Configuration <Debug>
 C/C++
