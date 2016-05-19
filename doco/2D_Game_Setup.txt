@@ -24,12 +24,24 @@ C/C++
 - General
 Additional includes - $(SolutionDir)src\;$(SolutionDir)MathStaticLib\includes\
 
+Linker
+- Input
+Additional Dependencies - glfw3.lib
+
 
 
 
 AIEOpenGL
 ------------------------------------------------------------------------
 
+VC++
+- Include Dir - $(SolutionDir)MathStaticLib/include;
+- Library Dir - $(SolutionsDir)bin/MathStaticLib$(Configuration)/;
+
 C/C++
 - General
 Additional includes - $(SolutionDir)MathStaticLib\includes\
+
+Linker
+-Input
+Additional Instances - MathStaticLib.lib;

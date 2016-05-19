@@ -58,7 +58,6 @@ void Application2D::draw() {
 	m_spriteBatch->drawSprite(m_texture, 200, 200, 100, 100);
 
 	m_spriteBatch->drawLine(300, 300, 600, 400, 10, 1);
-	m_spriteBatch->drawSpriteTransformed3x3(m_texture,)
 
 	m_spriteBatch->setSpriteColor(1, 0, 0, 1);
 	m_spriteBatch->drawSprite(m_texture, 400, 400, 50, 50, 3.14159f * 0.25f);
