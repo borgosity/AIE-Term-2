@@ -1,0 +1,35 @@
+
+MathStaticLib 
+-----------------------------------------------------------------------
+Configuration
+- General
+Output - $(SolutionDir)bin\MathStaticLib$(Configuration)\
+Intermediate- $(SolutionDir)build\MathStaticLib$(Configuration)\
+
+C/C++
+- General
+Additional includes - $(ProjectDir)includes\
+
+GameProject
+-----------------------------------------------------------------------
+Configuration
+- General
+Output - $(SolutionDir)bin\Game$(Configuration)\
+Intermediate- $(SolutionDir)build\Game$(Configuration)\
+- VC++
+Include Directories - $(SolutionDir)dep/glfw-3.1.2/include
+Library Directories - $(SolutionDir)dep/glfw-3.1.2/src/$(Configuration)
+
+C/C++
+- General
+Additional includes - $(SolutionDir)src\;$(SolutionDir)MathStaticLib\includes\
+
+
+
+
+AIEOpenGL
+------------------------------------------------------------------------
+
+C/C++
+- General
+Additional includes - $(SolutionDir)MathStaticLib\includes\
