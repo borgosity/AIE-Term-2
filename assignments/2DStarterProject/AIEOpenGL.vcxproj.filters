@@ -39,6 +39,9 @@
     <ClCompile Include="src\Font.cpp">
       <Filter>BaseCode</Filter>
     </ClCompile>
+    <ClCompile Include="src\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\gl_core_4_4.h">
@@ -53,11 +56,17 @@
     <ClInclude Include="src\Texture.h">
       <Filter>BaseCode</Filter>
     </ClInclude>
-    <ClInclude Include="src\Application2D.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Font.h">
       <Filter>BaseCode</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameDef.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

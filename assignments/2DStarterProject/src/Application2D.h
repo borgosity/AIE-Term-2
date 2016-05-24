@@ -5,6 +5,7 @@
 class SpriteBatch;
 class Texture;
 class Font;
+class Player;
 
 class Application2D : public BaseApplication {
 public:
@@ -23,4 +24,5 @@ protected:
 	SpriteBatch*	m_spriteBatch;
 	Texture*		m_texture;
 	Font*			m_font;
+	Player*			m_player;
 };

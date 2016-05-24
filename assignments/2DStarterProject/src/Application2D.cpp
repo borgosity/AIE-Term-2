@@ -6,6 +6,7 @@
 #include "Font.h"
 
 #include "MtxVec3.h"
+#include "Player.h"
 
 Application2D::Application2D() {
 
@@ -24,6 +25,8 @@ bool Application2D::startup() {
 	m_texture = new Texture("./bin/textures/crate.png");
 
 	m_font = new Font("./bin/font/consolas.ttf", 32);
+
+	m_player = new Player();
 
 	return true;
 }
