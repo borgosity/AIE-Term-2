@@ -6,17 +6,17 @@
 ***************************************************************************/
 Matrix3::Matrix3()
 {
-	m_column1->m_x = 1.0f;
+	m_column1->m_x = 0.0f;
 	m_column1->m_y = 0.0f;
 	m_column1->m_z = 0.0f;
 			 
 	m_column2->m_x = 0.0f;
-	m_column2->m_y = 1.0f;
+	m_column2->m_y = 0.0f;
 	m_column2->m_z = 0.0f;
 			 
 	m_column3->m_x = 0.0f;
 	m_column3->m_y = 0.0f;
-	m_column3->m_z = 1.0f;
+	m_column3->m_z = 0.0f;
 }
 /***************************************************************************
 
@@ -24,19 +24,18 @@ Matrix3::Matrix3()
 Matrix3::Matrix3(int a)
 {
 	float fa = (float)a;
-	float fb = 1.0f;
 
-	m_column1->m_x = fb;
+	m_column1->m_x = fa;
 	m_column1->m_y = fa;
 	m_column1->m_z = fa;
 					
 	m_column2->m_x = fa;
-	m_column2->m_y = fb;
+	m_column2->m_y = fa;
 	m_column2->m_z = fa;
 					
 	m_column3->m_x = fa;
 	m_column3->m_y = fa;
-	m_column3->m_z = fb;
+	m_column3->m_z = fa;
 	
 }
 /***************************************************************************
@@ -144,40 +143,6 @@ void Matrix3::setRotateZ(float z)
 	m_column3->m_x = 0.0f;
 	m_column3->m_y = 0.0f;
 	m_column3->m_z = 1.0f;
-}
-/***************************************************************************
-
-***************************************************************************/
-void Matrix3::CreateTranslation(Vector3 & vector3)
-{
-	//    row major     |    col major (actual imp
-	//----------------------------------------------
-	//          	    |   X ,  Y , Z
-	//  X, 1 ,  0 , m_x	|   1 ,  0 , 0
-	//  Y, 0 ,  1 , m_y	|   0 ,  1 , 0
-	//  Z, 0 ,  0 ,  1	|  m_x, m_y, 1
-
-	Matrix3 result(0);
-
-	result.m_column1->m_x = 1.0f;
-	result.m_column1->m_y = 0.0f;
-	result.m_column1->m_z = 0.0f;
-
-	result.m_column2->m_x = 0.0f;
-	result.m_column2->m_y = 1.0f;
-	result.m_column2->m_z = 0.0f;
-
-	result.m_column3->m_x = vector3.m_x;
-	result.m_column3->m_y = vector3.m_y;
-	result.m_column3->m_z = 1.0f;
-
-	*this = result;
-}
-/***************************************************************************
-
-***************************************************************************/
-void Matrix3::CreateRotation(float radians)
-{
 }
 /***************************************************************************
 

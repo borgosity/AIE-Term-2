@@ -73,9 +73,6 @@ public:
 	void setRotateY(float y);
 	void setRotateZ(float z);
 
-	void CreateTranslation(Vector3 & vector3);
-	void CreateRotation(float radians);
-
 	// operator overloads
 	Matrix3 &operator= (Matrix3 & m3);
 	operator float*();
