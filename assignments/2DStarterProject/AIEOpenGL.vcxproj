@@ -16,9 +16,11 @@
     <ClCompile Include="src\gl_core_4_4.c" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Application2D.cpp" />
+    <ClCompile Include="src\Object.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\SpriteBatch.cpp" />
     <ClCompile Include="src\Texture.cpp" />
+    <ClCompile Include="src\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BaseApplication.h" />
@@ -26,9 +28,11 @@
     <ClInclude Include="src\GameDef.h" />
     <ClInclude Include="src\gl_core_4_4.h" />
     <ClInclude Include="src\Application2D.h" />
+    <ClInclude Include="src\Object.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\SpriteBatch.h" />
     <ClInclude Include="src\Texture.h" />
+    <ClInclude Include="src\Wall.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{63494F4E-79FA-48AD-AA6C-BDF1FF1619FD}</ProjectGuid>
