@@ -9,16 +9,23 @@ class Object
 {
 public:
 	Object();
-	Object(float mass);
+	Object(int size, Vector3 & location, float mass = 10.0f);
 	~Object();
+
+	// transform member functions
+	void SetPosition(Vector3 position);
+	void SetVelocity(Vector3 velocity);
+	void ResetVelocity();
+
+	Vector3 GetPosition();
+
+	// collision detection
+	bool IsColliding(Object * object);
+	bool IsColliding(Vector3 * position);
 
 	void Update(float dt);
 	void Draw(SpriteBatch* batch);
 	void Reset();
-	// movement member functions
-	void MoveObject(int direction);
-	void ChangeDirection();
-	void ResetVelocity();
 
 private:
 	
@@ -26,7 +33,7 @@ private:
 	Vector3 m_position;	// current position
 	Vector3 m_prevPos;  // last known position
 	Vector3 m_velocity;
-	Texture* m_ObjectSprite;
+	Texture* m_objectSprite;
 
 	// debug meber variables
 	Font* m_fontDebug;
@@ -37,7 +44,8 @@ private:
 	int m_prevDir;			// old direction checking
 	int m_xPlus;			// flag for checking if x is increasing (-1,0,1) -1 == (x == previous Value)
 	int m_yPlus;			// flag for checking if y is increasing (-1,0,1) -1 == (x == previous Value)
-	float m_mass;
+	float m_mass;			// object mass
+	int m_size;				// object size
 
 	// private member functions
 	int RandomDir();				// old generate direction function

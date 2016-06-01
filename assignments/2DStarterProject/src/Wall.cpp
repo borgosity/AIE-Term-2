@@ -213,7 +213,7 @@ void Wall::EdgeDectection()
 	//m_rotation = 0;
 	Vector3 bump(2, 2, 0); // bump Wall off edge so they don't get stuck
 	// right/eastern edge check
-	if ((m_position.m_x + Wall_EDGE) >= SCREEN_W)
+	if ((m_position.m_x + WALL_EDGE) >= SCREEN_W)
 	{
 		if (m_xPlus == 1 && m_yPlus == 1)
 		{
@@ -234,7 +234,7 @@ void Wall::EdgeDectection()
 		Bounce(BOUNCE);
 	}
 	// top/northern edge check
-	else if ((m_position.m_y + Wall_EDGE) >= SCREEN_H)
+	else if ((m_position.m_y + WALL_EDGE) >= SCREEN_H)
 	{
 		if (m_xPlus == 1 && m_yPlus == 1)
 		{
@@ -256,7 +256,7 @@ void Wall::EdgeDectection()
 		Bounce(BOUNCE);
 	}
 	// left/western edge check
-	else if ((m_position.m_x - Wall_EDGE) <= 0)
+	else if ((m_position.m_x - WALL_EDGE) <= 0)
 	{
 		if (m_xPlus == 0 && m_yPlus == 0)
 		{
@@ -277,7 +277,7 @@ void Wall::EdgeDectection()
 		Bounce(BOUNCE);
 	}
 	// bottom/southern edge check
-	else if ((m_position.m_y - Wall_EDGE) <= 0)
+	else if ((m_position.m_y - WALL_EDGE) <= 0)
 	{
 		if (m_xPlus == 0 && m_yPlus == 0)
 		{
