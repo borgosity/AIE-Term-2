@@ -1,7 +1,10 @@
 #include "Application2D.h"
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
+<<<<<<< HEAD
 #include <iostream>
+=======
+>>>>>>> origin/master
 #include <vector>
 #include <memory>
 
@@ -48,12 +51,26 @@ bool Application2D::startup() {
 	//m_wtexture = new Texture("./bin/textures/object.png");
 
 	// world objects
+<<<<<<< HEAD
 	m_player = new Player(PLAYER_SIZE, 20.0f);
 	//m_object = new Object();
 	//m_object->SetPosition(Vector3(40, 40, 0));
 
 	// create the nasty objects
 	CreateObjects();
+=======
+	m_player = new Player();
+	//m_object = new Object();
+	//m_object->SetPosition(Vector3(40, 40, 0));
+
+	for (int i = 0; i < OBJECT_COUNT; i++)
+	{
+		m_objects.push_back(std::make_shared<Object>(10, Vector3(1, 0, 0)));
+		m_objects[i]->SetPosition(Vector3((float)(rand() % SCREEN_W),
+										  (float)(rand() % SCREEN_H),
+										  1.0f));
+	}
+>>>>>>> origin/master
 
 	return true;
 }
@@ -86,6 +103,7 @@ bool Application2D::update(float deltaTime) {
 	// reset player if spaced pressed
 	if (isKeyPressed(GLFW_KEY_SPACE))
 	{
+<<<<<<< HEAD
 		m_player->Reset();
 		CreateObjects();
 	}
@@ -116,6 +134,26 @@ bool Application2D::update(float deltaTime) {
 			{
 				m_objects[i]->ApplyCollision(m_objects[j]);
 				std::cout << "objects colliding" << std::endl;
+=======
+		m_player->Reset();
+		for (int i = 0; i < OBJECT_COUNT; ++i)
+		{
+			m_objects[i]->SetPosition(Vector3((float)(rand() % SCREEN_W), 
+											 (float)(rand() % SCREEN_H), 
+											 1.0f));
+			//m_objects[i].SetVelocity(Vector3(rand() % 1000 - 500.f, rand() % 1000 - 500.f, 0));
+		}
+	}
+
+	// check for collisions
+	for (int i = 0; i < OBJECT_COUNT; ++i)
+	{
+		for (int j = i + 1; j < OBJECT_COUNT; ++j)
+		{
+			if (m_objects[i].IsColliding(&m_objects[j]))
+			{
+				m_objects[i].ApplyCollision(&m_objects[j]);
+>>>>>>> origin/master
 			}
 		}
 	}
@@ -125,7 +163,11 @@ bool Application2D::update(float deltaTime) {
 	//m_object->Update(deltaTime);
 
 	// update objects
+<<<<<<< HEAD
 	for (int i = 0; i < m_objNum; ++i)
+=======
+	for (int i = 0; i < OBJECT_COUNT; ++i)
+>>>>>>> origin/master
 	{
 		m_objects[i]->Update(deltaTime);
 	}
@@ -152,7 +194,11 @@ void Application2D::draw() {
 	m_player->Draw(m_spriteBatch);
 
 	// draw objects
+<<<<<<< HEAD
 	for (int i = 0; i < m_objNum; ++i)
+=======
+	for (int i = 0; i < OBJECT_COUNT; ++i)
+>>>>>>> origin/master
 	{
 		m_objects[i]->Draw(m_spriteBatch);
 	}

@@ -36,6 +36,7 @@ protected:
 
 	SpriteBatch*	m_spriteBatch;
 	Font*			m_font;
+<<<<<<< HEAD
 		
 	// player memeber variables
 	Player*			m_player;
@@ -52,6 +53,18 @@ protected:
 	// wall realted member variables
 	Wall*			m_wall;
 	Texture*		m_wtexture;
+=======
+
+	Texture*		m_ptexture;
+	Texture*		m_otexture;
+	Texture*		m_wtexture;
+	
+	Player*			m_player;
+	Object*			m_object;
+	Wall*			m_wall;
+
+	std::vector<std::shared_ptr<Object>>	m_objects;
+>>>>>>> origin/master
 	std::vector<std::shared_ptr<Wall>>	m_walls;
 
 
