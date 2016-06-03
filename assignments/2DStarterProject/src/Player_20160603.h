@@ -1,15 +1,13 @@
 #pragma once
 
 #include "MtxVec3.h"
-#include "SceneNode.h"
 
 class SpriteBatch;
 class Texture;
-class Sprite;
 class Object;
 class Wall;
 
-class Player : public SceneNode
+class Player
 {
 public:
 	Player();
@@ -61,8 +59,6 @@ private:
 
 	// players visuals
 	Texture* m_playerSprite;
-	Texture* m_tailSprite;
-	Sprite* m_tail;
 	Font* m_fontHUD;
 
 	// debug member variables

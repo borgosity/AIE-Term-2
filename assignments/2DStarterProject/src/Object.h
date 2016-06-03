@@ -4,30 +4,63 @@
 
 class SpriteBatch;
 class Texture;
+class Player;
 
 class Object
 {
 public:
 	Object();
-	Object(float mass);
+	Object(float size, Vector3 & location, float mass);
 	~Object();
+
+	// transform member functions
+	void SetPosition(Vector3 position);
+	void SetVelocity(Vector3 velocity);
+	void ResetVelocity();
+	void DecreaseSpawns(int spawnNum = 1);
+
+	// collision detection
+	bool IsColliding(std::shared_ptr<Object> object);
+	bool IsColliding(Object * object);
+	bool IsColliding(Player * player);
+	bool IsColliding(Vector3 * position);
+	
+	// collision resolution
+	void ApplyCollision(std::shared_ptr<Object> object);
+	void ApplyCollision(Object * object);
+	void ApplyCollision(Player * player);
+
+	// gets 
+	Vector3 GetPosition();
+	const float GetSize();
+	bool IsAlive();
+	const int RespawnCount();
 
 	void Update(float dt);
 	void Draw(SpriteBatch* batch);
 	void Reset();
-	// movement member functions
-	void MoveObject(int direction);
-	void ChangeDirection();
-	void ResetVelocity();
 
 private:
 	
-	float m_rotation;
-	Vector3 m_position;	// current position
-	Vector3 m_prevPos;  // last known position
-	Vector3 m_velocity;
-	Texture* m_ObjectSprite;
+	// objects
+	Vector3 m_position;		// current position
+	Vector3 m_prevPos;		// last known position
+	float m_rotation;		// object rotation
+	Vector3 m_velocity;		// object velocity
+	float m_mass;			// object mass
+	
 
+	// objects vitals
+	float m_size;			// objects size
+	float m_currentSize;	// objects current size
+	int m_health;			// objectss health
+	bool m_alive;			// is object alive?
+	int m_spawnNum;			// number of evils twins to spawn
+	int m_respawnNum;		// number of generations, decreases with each generation
+
+	// objects visuals
+	Texture* m_objectSprite;
+	
 	// debug meber variables
 	Font* m_fontDebug;
 	bool m_debug;
@@ -37,7 +70,7 @@ private:
 	int m_prevDir;			// old direction checking
 	int m_xPlus;			// flag for checking if x is increasing (-1,0,1) -1 == (x == previous Value)
 	int m_yPlus;			// flag for checking if y is increasing (-1,0,1) -1 == (x == previous Value)
-	float m_mass;
+
 
 	// private member functions
 	int RandomDir();				// old generate direction function

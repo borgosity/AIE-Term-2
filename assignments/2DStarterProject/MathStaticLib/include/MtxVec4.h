@@ -80,6 +80,7 @@ public:
 
 	// operator overloads
 	Matrix4 &operator= (Matrix4 & m4);
+	Matrix4 &operator= (Matrix3 & m3);
 	operator float*();
 	Matrix4 &operator*= (const Matrix4 & m4b);
 	friend Matrix4 operator* (Matrix4 & m4a, Matrix4 & m4b);

@@ -209,6 +209,30 @@ Matrix4 & Matrix4::operator=(Matrix4 & m4)
 
 	return *this;
 }
+Matrix4 & Matrix4::operator=(Matrix3 & m3)
+{
+	m_column1->m_x = m3.m_column1->m_x;
+	m_column1->m_y = m3.m_column1->m_y;
+	m_column1->m_z = m3.m_column1->m_z;
+	m_column1->m_w = 0.0f;
+
+	m_column2->m_x = m3.m_column2->m_x;
+	m_column2->m_y = m3.m_column2->m_y;
+	m_column2->m_z = m3.m_column2->m_z;
+	m_column2->m_w = 0.0f;
+
+	m_column3->m_x = m3.m_column3->m_x;
+	m_column3->m_y = m3.m_column3->m_y;
+	m_column3->m_z = m3.m_column3->m_z;
+	m_column3->m_w = 0.0f;
+
+	m_column4->m_x = 0.0f;
+	m_column4->m_y = 0.0f;
+	m_column4->m_z = 0.0f;
+	m_column4->m_w = 1.0f;
+
+	return *this;
+}
 /***************************************************************************
 
 ***************************************************************************/

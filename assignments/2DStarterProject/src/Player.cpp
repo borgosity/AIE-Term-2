@@ -9,6 +9,7 @@
 #include "Application2D.h"
 #include "Player.h"
 #include "GameDef.h"
+#include "Sprite.h"
 
 #include "SpriteBatch.h"
 #include "Texture.h"
@@ -21,25 +22,57 @@
 
 Player::Player()
 {
+	// set player attributes
 	m_playerSprite = new Texture("./bin/textures/player.png");
+	m_fontHUD = new Font("./bin/font/consolas.ttf", 25);
+	m_mass = 10.0f;
+	m_size = 100.0f;
+	m_currentSize = m_size;
+	m_health = 100;
+	m_alive = true;
+	// add tail
+	m_tailSprite = new Texture("./bin/textures/tail.png");
+	AddChild(m_tail);
+	Matrix3 tail(0);
+	tail.CreateTranslation(Vector3(0.0f, 50.0f, 1.0f));
+	m_tail->SetLocalTransform(tail);
+	// debug setup
 	m_fontDebug = new Font("./bin/font/consolas.ttf", 15);
 	m_debug = false;
-	m_mass = 10;
+	// restet player
 	Reset();
 }
 
-Player::Player(float mass = 10.0f)
+Player::Player(float size = 100.0f, float mass = 10.0f)
 {
+	// set player attributes
 	m_playerSprite = new Texture("./bin/textures/player.png");
+	m_fontHUD = new Font("./bin/font/consolas.ttf", 25);
+	m_mass = 10.0f;
+	m_size = 100.0f;
+	m_currentSize = m_size;
+	m_health = 100;
+	m_alive = true;
+	// add tail
+	m_tailSprite = new Texture("./bin/textures/tail.png");
+	AddChild(m_tail);
+	Matrix3 tail(0);
+	tail.CreateTranslation(Vector3(0.0f, 50.0f, 1.0f));
+	m_tail->SetLocalTransform(tail);
+	// debug setup
 	m_fontDebug = new Font("./bin/font/consolas.ttf", 15);
 	m_debug = false;
-	m_mass = mass;
+	// restet player
 	Reset();
 }
 
 
 Player::~Player()
 {
+	delete m_playerSprite;
+	delete m_fontHUD;
+	delete m_tailSprite;
+	delete m_fontDebug;
 }
 
 void Player::Update(float dt)
@@ -114,8 +147,13 @@ void Player::Draw(SpriteBatch * batch)
 	//batch->drawSpriteTransformed3x3(m_playerSprite, (float*)translation, 100, 100);
 	
 	//*************************************** 
+	// Display Players Health
+	std::string health = "Health " + std::to_string(m_health);
+	batch->drawText(m_fontHUD, health.c_str(), 1100, 700);
+	
+	// rotate Player around local co-ordinates
 	translation = transpose * rotation;
-	batch->drawSpriteTransformed3x3(m_playerSprite, (float*)translation, 100, 100);
+	batch->drawSpriteTransformed3x3(m_playerSprite, (float*)translation, m_currentSize, m_currentSize);
 
 	//batch->drawSprite(m_playerSprite, m_position.m_x, m_position.m_y, 100, 100, 3.14159f * 0.25f);
 
@@ -156,9 +194,10 @@ void Player::Reset()
 	m_velocity.m_x = 0;
 	m_velocity.m_y = 0;
 	m_rotation = 0.0;
-	// set random direction of player
-	//ChangeDirection();
 	m_direction = 0;
+	m_currentSize = m_size;
+	m_health = PLAYER_HEALTH;
+	m_alive = true;
 	
 }
 
@@ -167,6 +206,67 @@ void Player::ResetVelocity()
 	m_velocity.m_x = 0;
 	m_velocity.m_y = 0;
 	m_velocity.m_z = 0;
+}
+
+void Player::ApplyCollision(int damage)
+{
+	if (m_currentSize < (PLAYER_SIZE * 2) && m_currentSize > (PLAYER_SIZE / 2))
+	{
+		if (m_health > 0)
+		{
+			m_currentSize += SIZE_PENALTY;
+			m_rotation += TURN_LEFT;
+			m_health -= damage/2;
+		}
+		else
+		{
+			m_alive = false;
+			// play plink death sequence
+		}
+
+	}
+	else if (m_currentSize <= (PLAYER_SIZE / 2))
+	{
+		if (m_health > 0)
+		{
+			m_health -= damage;
+		}
+		else
+		{
+			m_alive = false;
+			// play plink death sequence
+		}
+	}
+	else if (m_currentSize >= (PLAYER_SIZE * 2))
+	{
+		m_alive = false;
+		// play pop death sequence
+	}
+}
+
+void Player::SetRotation(float rotate)
+{
+	m_rotation += rotate;
+}
+
+void Player::SetSize(float size)
+{
+	m_size += size;
+}
+
+Vector3 Player::GetPosition()
+{
+	return m_position;
+}
+
+const float Player::GetSize()
+{
+	return m_currentSize;
+}
+
+bool Player::IsAlive()
+{
+	return m_alive;
 }
 
 int Player::RandomDir()
