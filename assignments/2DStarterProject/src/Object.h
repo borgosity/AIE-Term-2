@@ -10,18 +10,13 @@ class Object
 {
 public:
 	Object();
-<<<<<<< HEAD
 	Object(float size, Vector3 & location, float mass);
-=======
-	Object(int size, Vector3 & location, float mass = 10.0f);
->>>>>>> origin/master
 	~Object();
 
 	// transform member functions
 	void SetPosition(Vector3 position);
 	void SetVelocity(Vector3 velocity);
 	void ResetVelocity();
-<<<<<<< HEAD
 	void DecreaseSpawns(int spawnNum = 1);
 
 	// collision detection
@@ -40,14 +35,6 @@ public:
 	const float GetSize();
 	bool IsAlive();
 	const int RespawnCount();
-=======
-
-	Vector3 GetPosition();
-
-	// collision detection
-	bool IsColliding(Object * object);
-	bool IsColliding(Vector3 * position);
->>>>>>> origin/master
 
 	void Update(float dt);
 	void Draw(SpriteBatch* batch);
@@ -55,7 +42,6 @@ public:
 
 private:
 	
-<<<<<<< HEAD
 	// objects
 	Vector3 m_position;		// current position
 	Vector3 m_prevPos;		// last known position
@@ -71,13 +57,6 @@ private:
 	bool m_alive;			// is object alive?
 	int m_spawnNum;			// number of evils twins to spawn
 	int m_respawnNum;		// number of generations, decreases with each generation
-=======
-	float m_rotation;
-	Vector3 m_position;	// current position
-	Vector3 m_prevPos;  // last known position
-	Vector3 m_velocity;
-	Texture* m_objectSprite;
->>>>>>> origin/master
 
 	// objects visuals
 	Texture* m_objectSprite;
@@ -91,12 +70,7 @@ private:
 	int m_prevDir;			// old direction checking
 	int m_xPlus;			// flag for checking if x is increasing (-1,0,1) -1 == (x == previous Value)
 	int m_yPlus;			// flag for checking if y is increasing (-1,0,1) -1 == (x == previous Value)
-<<<<<<< HEAD
 
-=======
-	float m_mass;			// object mass
-	int m_size;				// object size
->>>>>>> origin/master
 
 	// private member functions
 	int RandomDir();				// old generate direction function

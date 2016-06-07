@@ -173,6 +173,31 @@ void Matrix3::CreateTranslation(Vector3 & vector3)
 
 	*this = result;
 }
+void Matrix3::CreateTranslation(float x, float y, float z)
+{
+	//    row major     |    col major (actual imp
+	//----------------------------------------------
+	//          	    |   X ,  Y , Z
+	//  X, 1 ,  0 , m_x	|   1 ,  0 , 0
+	//  Y, 0 ,  1 , m_y	|   0 ,  1 , 0
+	//  Z, 0 ,  0 ,  1	|  m_x, m_y, 1
+
+	Matrix3 result(0);
+
+	result.m_column1->m_x = 1.0f;
+	result.m_column1->m_y = 0.0f;
+	result.m_column1->m_z = 0.0f;
+
+	result.m_column2->m_x = 0.0f;
+	result.m_column2->m_y = 1.0f;
+	result.m_column2->m_z = 0.0f;
+
+	result.m_column3->m_x = x;
+	result.m_column3->m_y = y;
+	result.m_column3->m_z = z;
+
+	*this = result;
+}
 /***************************************************************************
 
 ***************************************************************************/

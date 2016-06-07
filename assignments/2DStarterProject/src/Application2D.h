@@ -11,6 +11,7 @@ class Font;
 class Player;
 class Wall;
 class Object;
+class Scene;
 
 class Application2D : public BaseApplication {
 public:
@@ -29,14 +30,19 @@ public:
 
 	// evil object functions
 	void CreateObjects();			// creates the evil objects
+	void DestroyObjects();			// deletes the evil objects
 	void ProcessTheDEAD();				// checks the army of evil objects for the dead
 	void SpawnObjects(std::shared_ptr<Object> object, int spawnCount);
+
+	// save game
+	void SaveGame();
+	void LoadGame();
 
 protected:
 
 	SpriteBatch*	m_spriteBatch;
 	Font*			m_font;
-<<<<<<< HEAD
+	Scene*			m_scene;
 		
 	// player memeber variables
 	Player*			m_player;
@@ -53,19 +59,15 @@ protected:
 	// wall realted member variables
 	Wall*			m_wall;
 	Texture*		m_wtexture;
-=======
-
-	Texture*		m_ptexture;
-	Texture*		m_otexture;
-	Texture*		m_wtexture;
-	
-	Player*			m_player;
-	Object*			m_object;
-	Wall*			m_wall;
-
-	std::vector<std::shared_ptr<Object>>	m_objects;
->>>>>>> origin/master
 	std::vector<std::shared_ptr<Wall>>	m_walls;
+
+	// gaem variables
+	bool m_pause;
+	bool m_save;
+	bool m_newGame;
+	bool m_savedGame;
+	bool m_gameLoaded;
+	bool m_playing;
 
 
 private:

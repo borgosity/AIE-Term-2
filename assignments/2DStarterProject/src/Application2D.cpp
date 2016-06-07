@@ -1,12 +1,12 @@
 #include "Application2D.h"
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
-<<<<<<< HEAD
 #include <iostream>
-=======
->>>>>>> origin/master
 #include <vector>
 #include <memory>
+#include <fstream>
+#include <ctime>
+#include "XPathParser.h"
 
 #include "SpriteBatch.h"
 #include "Texture.h"
@@ -15,6 +15,7 @@
 // my header files
 #include "MtxVec3.h"
 #include "Player.h"
+#include "Scene.h"
 #include "Object.h"
 #include "Wall.h"
 
@@ -42,55 +43,28 @@ bool Application2D::startup() {
 	createWindow("A.I. Project", 1280, 720);
 
 	m_spriteBatch = new SpriteBatch();
-
-	m_font = new Font("./bin/font/consolas.ttf", 32);
-
-	// textures
-	//m_ptexture = new Texture("./bin/textures/player.png");
-	//m_otexture = new Texture("./bin/textures/player.png");
-	//m_wtexture = new Texture("./bin/textures/object.png");
-
-	// world objects
-<<<<<<< HEAD
 	m_player = new Player(PLAYER_SIZE, 20.0f);
-	//m_object = new Object();
-	//m_object->SetPosition(Vector3(40, 40, 0));
+	m_player->SetNodeName("m_player");
+	m_scene = new Scene();
+	m_scene->SetRoot(m_player);
+	m_font = new Font("./bin/font/consolas.ttf", 32);
+	m_playing = false;
+	m_savedGame = false;
+	m_gameLoaded = false;
 
 	// create the nasty objects
-	CreateObjects();
-=======
-	m_player = new Player();
-	//m_object = new Object();
-	//m_object->SetPosition(Vector3(40, 40, 0));
-
-	for (int i = 0; i < OBJECT_COUNT; i++)
-	{
-		m_objects.push_back(std::make_shared<Object>(10, Vector3(1, 0, 0)));
-		m_objects[i]->SetPosition(Vector3((float)(rand() % SCREEN_W),
-										  (float)(rand() % SCREEN_H),
-										  1.0f));
-	}
->>>>>>> origin/master
+	//CreateObjects();
 
 	return true;
 }
 
 void Application2D::shutdown() {
 
+	DestroyObjects();
 	delete m_font;
-	delete m_spriteBatch;
-
-	// player deletes
-	//delete m_ptexture;
+	delete m_scene;
 	delete m_player;
-	// object deletes
-	//delete m_otexture;
-	delete m_object;
-
-	// wall deletes
-	//delete m_wtexture;
-	//delete m_wall;
-
+	delete m_spriteBatch;
 	destroyWindow();
 }
 
@@ -99,13 +73,61 @@ bool Application2D::update(float deltaTime) {
 	// close the application if the window closes or we press escape
 	if (hasWindowClosed() || isKeyPressed(GLFW_KEY_ESCAPE))
 		return false;
+	
+	// pause game
+	if (isKeyPressed(GLFW_KEY_P) && m_playing)
+	{
+		std::cout << "Pause Game" << std::endl;
+		m_pause = true;
+
+	}
+
+	if (m_pause) {
+		if (IsKeyDown(GLFW_KEY_ENTER))
+		{
+			m_pause = false;
+			m_playing = true;
+			m_savedGame = false;
+			m_gameLoaded = false;
+		}
+
+		// load saved game
+		if (isKeyPressed(GLFW_KEY_L) && !m_playing)
+		{
+			std::cout << "Load Game" << std::endl;
+			LoadGame();
+			std::cout << "Game Loaded" << std::endl;
+			m_gameLoaded = true;
+			m_pause = true;
+		}
+
+		// save game state
+		if (isKeyPressed(GLFW_KEY_S) && m_playing)
+		{
+			std::cout << "Save Game" << std::endl;
+			SaveGame();
+			std::cout << "Game Saved" << std::endl;
+			m_savedGame = true;
+			m_pause = true;
+		}
+
+		// reset player if spaced pressed
+		if (isKeyPressed(GLFW_KEY_SPACE))
+		{
+			m_player->Reset();
+			m_pause = false;
+			//CreateObjects();
+		}
+
+		return true;
+	}
 
 	// reset player if spaced pressed
 	if (isKeyPressed(GLFW_KEY_SPACE))
 	{
-<<<<<<< HEAD
 		m_player->Reset();
-		CreateObjects();
+		m_pause = false;
+		//CreateObjects();
 	}
 
 	// dead checks
@@ -114,63 +136,39 @@ bool Application2D::update(float deltaTime) {
 	if (!m_player->IsAlive())
 	{
 		m_player->Reset();
-		CreateObjects();
+		//CreateObjects();
 	}
 	// trawl through the evils objects for the dead and respawn their children
-	ProcessTheDEAD();
+	//ProcessTheDEAD();
 
 	// check for collisions
 	// ----------------------------------------------------------------------
-	for (int i = 0; i < m_objNum; ++i)
-	{
-		if (m_objects[i]->IsColliding(m_player))
-		{
-			m_objects[i]->ApplyCollision(m_player);
-			std::cout << "player colliding" << std::endl;
-		}
-		for (int j = i + 1; j < m_objNum; ++j)
-		{
-			if (m_objects[i]->IsColliding(m_objects[j]))
-			{
-				m_objects[i]->ApplyCollision(m_objects[j]);
-				std::cout << "objects colliding" << std::endl;
-=======
-		m_player->Reset();
-		for (int i = 0; i < OBJECT_COUNT; ++i)
-		{
-			m_objects[i]->SetPosition(Vector3((float)(rand() % SCREEN_W), 
-											 (float)(rand() % SCREEN_H), 
-											 1.0f));
-			//m_objects[i].SetVelocity(Vector3(rand() % 1000 - 500.f, rand() % 1000 - 500.f, 0));
-		}
-	}
-
-	// check for collisions
-	for (int i = 0; i < OBJECT_COUNT; ++i)
-	{
-		for (int j = i + 1; j < OBJECT_COUNT; ++j)
-		{
-			if (m_objects[i].IsColliding(&m_objects[j]))
-			{
-				m_objects[i].ApplyCollision(&m_objects[j]);
->>>>>>> origin/master
-			}
-		}
-	}
+	//for (int i = 0; i < m_objNum; ++i)
+	//{
+	//	if (m_objects[i]->IsColliding(m_player))
+	//	{
+	//		m_objects[i]->ApplyCollision(m_player);
+	//		std::cout << "player colliding" << std::endl;
+	//	}
+	//	for (int j = i + 1; j < m_objNum; ++j)
+	//	{
+	//		if (m_objects[i]->IsColliding(m_objects[j]))
+	//		{
+	//			m_objects[i]->ApplyCollision(m_objects[j]);
+	//			std::cout << "objects colliding" << std::endl;
+	//		}
+	//	}
+	//}
 
 	// update player
+	m_scene->UpdateTransforms();
 	m_player->Update(deltaTime);
-	//m_object->Update(deltaTime);
 
 	// update objects
-<<<<<<< HEAD
-	for (int i = 0; i < m_objNum; ++i)
-=======
-	for (int i = 0; i < OBJECT_COUNT; ++i)
->>>>>>> origin/master
-	{
-		m_objects[i]->Update(deltaTime);
-	}
+	//for (int i = 0; i < m_objNum; ++i)
+	//{
+	//	m_objects[i]->Update(deltaTime);
+	//}
 
 	// the applciation closes if we return false
 	return true;
@@ -184,38 +182,49 @@ void Application2D::draw() {
 	// begin drawing sprites
 	m_spriteBatch->begin();
 
-	// some game checks here
-	//*******************************
-	// is game paused?
-	// is player dead?
-	// is game finished?
-
-	// draw player
-	m_player->Draw(m_spriteBatch);
-
-	// draw objects
-<<<<<<< HEAD
-	for (int i = 0; i < m_objNum; ++i)
-=======
-	for (int i = 0; i < OBJECT_COUNT; ++i)
->>>>>>> origin/master
+	if (m_pause && !m_playing && !m_gameLoaded)
 	{
-		m_objects[i]->Draw(m_spriteBatch);
+		m_spriteBatch->drawText(m_font, "Press Enter to Start New Game", (float)HALF_SW - 250, (float)HALF_SH + 28.0f);
+		m_spriteBatch->drawText(m_font, "Press L to Load Last Saved Game", (float)HALF_SW - 250, (float)HALF_SH);
+		m_spriteBatch->drawText(m_font, "Press P to Pause in Game", (float)HALF_SW - 250, (float)HALF_SH - 28.0f);
+		m_spriteBatch->drawText(m_font, "Press ESC to Quit", (float)HALF_SW - 250, (float)HALF_SH - 56.0f);
 	}
+	else if (m_pause && m_playing && !m_savedGame)
+	{
+		m_spriteBatch->drawText(m_font, "Press Space to Reset Game", (float)HALF_SW - 250, (float)HALF_SH + 28.0f);
+		m_spriteBatch->drawText(m_font, "Press S to Save Game", (float)HALF_SW - 250, (float)HALF_SH);
+		m_spriteBatch->drawText(m_font, "Press Enter to Resume", (float)HALF_SW - 250, (float)HALF_SH - 28.0f);
+	}
+	else if (m_pause && m_savedGame && m_playing)
+	{
+		m_spriteBatch->drawText(m_font, "Game Saved Successfully!", (float)HALF_SW - 250, (float)HALF_SH + 28.0f);
+		m_spriteBatch->drawText(m_font, "Press Enter to Resume", (float)HALF_SW - 250, (float)HALF_SH - 28.0f);
+		m_spriteBatch->drawText(m_font, "Press ESC to Quit", (float)HALF_SW - 250, (float)HALF_SH - 56.0f);
+	}
+	else if (m_pause && m_gameLoaded && !m_playing)
+	{
+		m_spriteBatch->drawText(m_font, "Game Loaded Successfully!", (float)HALF_SW - 250, (float)HALF_SH + 28.0f);
+		m_spriteBatch->drawText(m_font, "Press Enter to Play...", (float)HALF_SW - 250, (float)HALF_SH - 28.0f);
+	}
+	else
+	{
+		if (!m_player->IsAlive())
+		{
+			m_spriteBatch->drawText(m_font, "GAME OVER...!", (float)HALF_SW - 150, (float)HALF_SH);
+		}
+		else if (m_player->Score() == 100)
+		{
+			m_spriteBatch->drawText(m_font, "WINNER...!", (float)HALF_SW - 150, (float)HALF_SH);
+		}
+		// draw player
+		m_player->Draw(m_spriteBatch);
 
-
-
-	//m_spriteBatch->drawSprite(m_texture, 200, 200, 100, 100);
-
-	//m_spriteBatch->drawLine(300, 300, 600, 400, 10, 1);
-
-	//m_spriteBatch->setSpriteColor(1, 0, 0, 1);
-	//m_spriteBatch->drawSprite(m_wtexture, 400, 400, 100, 100, 3.14159f * 0.25f);
-
-	//m_spriteBatch->setSpriteColor(0, 1, 1, 1);
-	//m_spriteBatch->drawText(m_font, "OMG BBQ!", 200, 400);
-	//m_spriteBatch->drawText(m_font, "Yeaaahhhhh", 200, 300);
-
+		// draw objects
+		//for (int i = 0; i < m_objNum; ++i)
+		//{
+		//	m_objects[i]->Draw(m_spriteBatch);
+		//}
+	}
 	// done drawing sprites
 	m_spriteBatch->end();	
 }
@@ -233,6 +242,11 @@ void Application2D::CreateObjects()
 
 }
 
+void Application2D::DestroyObjects()
+{
+	// objects destroyed auto magically by shared_ptr
+}
+
 void Application2D::ProcessTheDEAD()
 {
 	bool foundDead = true;
@@ -240,7 +254,7 @@ void Application2D::ProcessTheDEAD()
 	while (foundDead)
 	{	
 		// check if objects are alive, if not remove them
-		for (int i = 0; i < m_objects.size(); i++)
+		for (size_t i = 0; i < m_objects.size(); i++)
 		{
 			if (!m_objects[i]->IsAlive())
 			{
@@ -259,7 +273,7 @@ void Application2D::ProcessTheDEAD()
 
 	}
 
-	for (int i = 0; i < m_tempObjs.size(); i++)
+	for (size_t i = 0; i < m_tempObjs.size(); i++)
 	{
 		// decrease spwan reproductability
 		m_tempObjs[i]->DecreaseSpawns();
@@ -288,4 +302,36 @@ void Application2D::SpawnObjects(std::shared_ptr<Object> object, int spawnCount)
 		}
 	}
 
+}
+
+void Application2D::SaveGame()
+{
+	std::string savePath = "saves/game_save.xml";
+	
+	// clear game save
+	std::ofstream clearfile;
+	clearfile.open(savePath, std::ofstream::out | std::ofstream::trunc);
+	clearfile.close();
+	// save new game
+	std::ofstream output(savePath, std::ofstream::app);
+	if (output.is_open())
+	{
+		output << m_scene->GetRoot()->SaveState().c_str();
+	}
+	output.close();
+}
+
+void Application2D::LoadGame()
+{
+	float c1x = 0.0f, float c1y = 0.0f, float c1z = 0.0f;
+	float c2x = 0.0f, float c2y = 0.0f, float c2z = 0.0f;
+	float c3x = 0.0f, float c3y = 0.0f, float c3z = 0.0f;
+
+	m_scene->GetRoot()->SetLocalTransform(c1x, c1y, c1z, c2x, c2y, c2z, c3x, c3y, c3z);
+
+	c1x = 0.0f, c1y = 0.0f, c1z = 0.0f;
+	c2x = 0.0f, c2y = 0.0f, c2z = 0.0f;
+	c3x = 0.0f, c3y = 0.0f, c3z = 0.0f;
+
+	m_scene->GetRoot()->SetLocalTransform(c1x, c1y, c1z, c2x, c2y, c2z, c3x, c3y, c3z);
 }

@@ -74,6 +74,7 @@ public:
 	void setRotateZ(float z);
 
 	void CreateTranslation(Vector3 & vector3);
+	void CreateTranslation(float x, float y, float z = 1.0f);
 	void CreateRotation(float radians);
 
 	// operator overloads

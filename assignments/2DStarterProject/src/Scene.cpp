@@ -20,3 +20,8 @@ void Scene::SetRoot(SceneNode * sceneRoot)
 {
 	m_scene_root = sceneRoot;
 }
+
+SceneNode * Scene::GetRoot()
+{
+	return m_scene_root;
+}

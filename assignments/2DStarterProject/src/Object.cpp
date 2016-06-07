@@ -25,7 +25,6 @@ Object::Object()
 	m_objectSprite = new Texture("./bin/textures/object.png");
 	m_fontDebug = new Font("./bin/font/consolas.ttf", 15);
 	m_debug = false;
-<<<<<<< HEAD
 	m_mass = 10.0f;
 	m_size = 20.0f;
 	m_currentSize = m_size;
@@ -36,13 +35,6 @@ Object::Object()
 }
 
 Object::Object(float size, Vector3 & location, float mass)
-=======
-	m_mass = 10;
-	//Reset();
-}
-
-Object::Object(int size, Vector3 & location, float mass)
->>>>>>> origin/master
 {
 	m_objectSprite = new Texture("./bin/textures/object.png");
 	m_fontDebug = new Font("./bin/font/consolas.ttf", 15);
@@ -50,13 +42,10 @@ Object::Object(int size, Vector3 & location, float mass)
 	m_mass = mass;
 	m_position = location;
 	m_size = size;
-<<<<<<< HEAD
 	m_currentSize = m_size;
 	m_alive = true;
 	m_spawnNum = OBJECT_SPAWN;
 	m_respawnNum = MAX_RESPAWN;
-=======
->>>>>>> origin/master
 	//Reset();
 }
 
@@ -92,28 +81,19 @@ void Object::Update(float dt)
 	// set current postion as last position
 	//m_prevPos = m_position;
 
-<<<<<<< HEAD
 	Matrix3 m(0);
 	m.setRotateZ(m_rotation);// *(M_PI / 2));
 	Vector3 v = m * m_velocity;
 	m_position += v * dt;
-=======
-	//MoveObject(m_direction);
-	//Matrix3 m(0);
-	//m.setRotateZ(m_rotation);// *(M_PI / 2));
-	//Vector3 v = m * m_velocity;
-	//m_position += v * dt;
-
->>>>>>> origin/master
 }
 
 void Object::Draw(SpriteBatch * batch)
 {
-	//Matrix3 transpose(0);
-	//transpose.CreateTranslation(Vector3(m_position.m_x, m_position.m_y, 0));
-	//Matrix3 rotation(0);
-	//rotation.setRotateZ(m_rotation);// *(M_PI / 2));
-	//Matrix3 translation = transpose;
+	Matrix3 transpose(0);
+	transpose.CreateTranslation(Vector3(m_position.m_x, m_position.m_y, 0));
+	Matrix3 rotation(0);
+	rotation.setRotateZ(m_rotation);// *(M_PI / 2));
+	Matrix3 translation = transpose;
 	
 	//***************************************
 	// rotate around 0/0 world cordinates
@@ -122,15 +102,9 @@ void Object::Draw(SpriteBatch * batch)
 	
 	//*************************************** 
 	//translation = transpose * rotation;
-<<<<<<< HEAD
 	batch->drawSpriteTransformed3x3(m_objectSprite, (float*)translation, m_currentSize, m_currentSize);
 
 	//batch->drawSprite(m_objectSprite, m_position.m_x, m_position.m_y, m_size, m_size, 3.14159f * 0.25f);
-=======
-	//batch->drawSpriteTransformed3x3(m_ObjectSprite, (float*)translation, 100, 100);
-
-	batch->drawSprite(m_objectSprite, m_position.m_x, m_position.m_y, 100, 100, 3.14159f * 0.25f);
->>>>>>> origin/master
 
 	//*********************************************************************************************************
 	// debugging
@@ -172,16 +146,6 @@ void Object::SetVelocity(Vector3 velocity)
 	m_velocity = velocity;
 }
 
-void Object::SetPosition(Vector3 position)
-{
-	m_position = position;
-}
-
-void Object::SetVelocity(Vector3 velocity)
-{
-	m_velocity = velocity;
-}
-
 void Object::ResetVelocity()
 {
 	m_velocity.m_x = 0;
@@ -189,20 +153,16 @@ void Object::ResetVelocity()
 	m_velocity.m_z = 0;
 }
 
-<<<<<<< HEAD
 void Object::DecreaseSpawns(int spawnNum)
 {
 	m_spawnNum -= spawnNum;
 }
 
-=======
->>>>>>> origin/master
 Vector3 Object::GetPosition()
 {
 	return m_position;
 }
 
-<<<<<<< HEAD
 const float Object::GetSize()
 {
 	return m_currentSize;
@@ -287,17 +247,6 @@ void Object::ApplyCollision(Player * player)
 		// play pop death sequence
 	}
 	player->ApplyCollision((int)m_currentSize);
-=======
-bool Object::IsColliding(Object * object)
-{
-	float radSum = m_size + object->m_size;
-	
-	Vector3 magSum = m_position - object->GetPosition();
-	if (magSum.magnitude() < (radSum * radSum))
-	{
-
-	}
->>>>>>> origin/master
 }
 
 int Object::RandomDir()

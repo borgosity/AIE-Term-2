@@ -9,6 +9,7 @@ public:
 
 	void UpdateTransforms();
 	void SetRoot(SceneNode * sceneRoot);
+	SceneNode * GetRoot();
 
 private:
 	SceneNode * m_scene_root;
