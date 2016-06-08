@@ -1,12 +1,13 @@
 #pragma once
 
 #include "MtxVec3.h"
+#include "SceneNode.h"
 
 class SpriteBatch;
 class Texture;
 class Player;
 
-class Object
+class Object : public SceneNode
 {
 public:
 	Object();

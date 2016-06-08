@@ -196,6 +196,19 @@ void Matrix3::CreateTranslation(float x, float y, float z)
 	result.m_column3->m_y = y;
 	result.m_column3->m_z = z;
 
+	// row major
+	//result.m_column1->m_x = 1.0f;
+	//result.m_column1->m_y = 0.0f;
+	//result.m_column1->m_z = x;
+
+	//result.m_column2->m_x = 0.0f;
+	//result.m_column2->m_y = 1.0f;
+	//result.m_column2->m_z = y;
+
+	//result.m_column3->m_x = 0.0f;
+	//result.m_column3->m_y = 0.0f;
+	//result.m_column3->m_z = z;
+
 	*this = result;
 }
 /***************************************************************************

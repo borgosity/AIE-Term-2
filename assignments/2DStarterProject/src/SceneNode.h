@@ -14,12 +14,14 @@ public:
 	void AddChild(SceneNode * newChild, SceneNode * parent);
 	void RemoveChild(SceneNode * removeChild);
 	void UpdateTransforms();
-	std::string SaveStateXML();
 	std::string SaveStateYAML();
 
 	void SetNodeName(const char * nodeName);
 	void SetLocalTransform(float c1x, float c1y, float c1z, float c2x, float c2y, float c2z, float c3x, float c3y, float c3z);
 	void SetGlobalTransform(float c1x, float c1y, float c1z, float c2x, float c2y, float c2z, float c3x, float c3y, float c3z);
+
+	const char * GetNodeName();
+	const std::list<SceneNode*>& GetChildren();
 
 protected:
 	

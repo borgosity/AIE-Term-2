@@ -1,13 +1,17 @@
 #include "Application2D.h"
+// dependency includes
 #include <GLFW/glfw3.h>
+#include "yaml-cpp\yaml.h"
+
+// std library includes
 #include <stdlib.h>
 #include <iostream>
 #include <vector>
 #include <memory>
 #include <fstream>
 #include <ctime>
-#include "XPathParser.h"
 
+// App2d includes
 #include "SpriteBatch.h"
 #include "Texture.h"
 #include "Font.h"
@@ -37,7 +41,9 @@ Application2D::~Application2D()
 {	
 
 }
+/*****************************************************************************************************************
 
+******************************************************************************************************************/
 bool Application2D::startup() {
 	
 	createWindow("A.I. Project", 1280, 720);
@@ -53,11 +59,13 @@ bool Application2D::startup() {
 	m_gameLoaded = false;
 
 	// create the nasty objects
-	//CreateObjects();
+	CreateObjects();
 
 	return true;
 }
+/*****************************************************************************************************************
 
+******************************************************************************************************************/
 void Application2D::shutdown() {
 
 	DestroyObjects();
@@ -67,7 +75,9 @@ void Application2D::shutdown() {
 	delete m_spriteBatch;
 	destroyWindow();
 }
+/*****************************************************************************************************************
 
+******************************************************************************************************************/
 bool Application2D::update(float deltaTime) {
 	
 	// close the application if the window closes or we press escape
@@ -92,7 +102,7 @@ bool Application2D::update(float deltaTime) {
 		}
 
 		// load saved game
-		if (isKeyPressed(GLFW_KEY_L) && !m_playing)
+		if (isKeyPressed(GLFW_KEY_L))
 		{
 			std::cout << "Load Game" << std::endl;
 			LoadGame();
@@ -136,44 +146,46 @@ bool Application2D::update(float deltaTime) {
 	if (!m_player->IsAlive())
 	{
 		m_player->Reset();
-		//CreateObjects();
+		CreateObjects();
 	}
 	// trawl through the evils objects for the dead and respawn their children
-	//ProcessTheDEAD();
+	ProcessTheDEAD();
 
 	// check for collisions
 	// ----------------------------------------------------------------------
-	//for (int i = 0; i < m_objNum; ++i)
-	//{
-	//	if (m_objects[i]->IsColliding(m_player))
-	//	{
-	//		m_objects[i]->ApplyCollision(m_player);
-	//		std::cout << "player colliding" << std::endl;
-	//	}
-	//	for (int j = i + 1; j < m_objNum; ++j)
-	//	{
-	//		if (m_objects[i]->IsColliding(m_objects[j]))
-	//		{
-	//			m_objects[i]->ApplyCollision(m_objects[j]);
-	//			std::cout << "objects colliding" << std::endl;
-	//		}
-	//	}
-	//}
+	for (int i = 0; i < m_objNum; ++i)
+	{
+		if (m_objects[i]->IsColliding(m_player))
+		{
+			m_objects[i]->ApplyCollision(m_player);
+			std::cout << "player colliding" << std::endl;
+		}
+		for (int j = i + 1; j < m_objNum; ++j)
+		{
+			if (m_objects[i]->IsColliding(m_objects[j]))
+			{
+				m_objects[i]->ApplyCollision(m_objects[j]);
+				std::cout << "objects colliding" << std::endl;
+			}
+		}
+	}
 
 	// update player
 	m_scene->UpdateTransforms();
 	m_player->Update(deltaTime);
 
 	// update objects
-	//for (int i = 0; i < m_objNum; ++i)
-	//{
-	//	m_objects[i]->Update(deltaTime);
-	//}
+	for (int i = 0; i < m_objNum; ++i)
+	{
+		m_objects[i]->Update(deltaTime);
+	}
 
 	// the applciation closes if we return false
 	return true;
 }
+/*****************************************************************************************************************
 
+******************************************************************************************************************/
 void Application2D::draw() {
 	
 	// wipe the screen to the background colour
@@ -189,11 +201,12 @@ void Application2D::draw() {
 		m_spriteBatch->drawText(m_font, "Press P to Pause in Game", (float)HALF_SW - 250, (float)HALF_SH - 28.0f);
 		m_spriteBatch->drawText(m_font, "Press ESC to Quit", (float)HALF_SW - 250, (float)HALF_SH - 56.0f);
 	}
-	else if (m_pause && m_playing && !m_savedGame)
+	else if (m_pause && m_playing && !m_savedGame && !m_gameLoaded)
 	{
 		m_spriteBatch->drawText(m_font, "Press Space to Reset Game", (float)HALF_SW - 250, (float)HALF_SH + 28.0f);
-		m_spriteBatch->drawText(m_font, "Press S to Save Game", (float)HALF_SW - 250, (float)HALF_SH);
-		m_spriteBatch->drawText(m_font, "Press Enter to Resume", (float)HALF_SW - 250, (float)HALF_SH - 28.0f);
+		m_spriteBatch->drawText(m_font, "Press L to Load Last Saved Game", (float)HALF_SW - 250, (float)HALF_SH);
+		m_spriteBatch->drawText(m_font, "Press S to Save Game", (float)HALF_SW - 250, (float)HALF_SH - 28.0f);
+		m_spriteBatch->drawText(m_font, "Press Enter to Resume", (float)HALF_SW - 250, (float)HALF_SH - 56.0f);
 	}
 	else if (m_pause && m_savedGame && m_playing)
 	{
@@ -201,7 +214,7 @@ void Application2D::draw() {
 		m_spriteBatch->drawText(m_font, "Press Enter to Resume", (float)HALF_SW - 250, (float)HALF_SH - 28.0f);
 		m_spriteBatch->drawText(m_font, "Press ESC to Quit", (float)HALF_SW - 250, (float)HALF_SH - 56.0f);
 	}
-	else if (m_pause && m_gameLoaded && !m_playing)
+	else if (m_pause && m_gameLoaded)
 	{
 		m_spriteBatch->drawText(m_font, "Game Loaded Successfully!", (float)HALF_SW - 250, (float)HALF_SH + 28.0f);
 		m_spriteBatch->drawText(m_font, "Press Enter to Play...", (float)HALF_SW - 250, (float)HALF_SH - 28.0f);
@@ -220,15 +233,17 @@ void Application2D::draw() {
 		m_player->Draw(m_spriteBatch);
 
 		// draw objects
-		//for (int i = 0; i < m_objNum; ++i)
-		//{
-		//	m_objects[i]->Draw(m_spriteBatch);
-		//}
+		for (int i = 0; i < m_objNum; ++i)
+		{
+			m_objects[i]->Draw(m_spriteBatch);
+		}
 	}
 	// done drawing sprites
 	m_spriteBatch->end();	
 }
+/*****************************************************************************************************************
 
+******************************************************************************************************************/
 void Application2D::CreateObjects()
 {
 	// Set number of objects
@@ -241,12 +256,16 @@ void Application2D::CreateObjects()
 	}
 
 }
+/*****************************************************************************************************************
 
+******************************************************************************************************************/
 void Application2D::DestroyObjects()
 {
 	// objects destroyed auto magically by shared_ptr
 }
+/*****************************************************************************************************************
 
+******************************************************************************************************************/
 void Application2D::ProcessTheDEAD()
 {
 	bool foundDead = true;
@@ -284,7 +303,9 @@ void Application2D::ProcessTheDEAD()
 	// empty the nursery
 	m_tempObjs.clear();
 }
+/*****************************************************************************************************************
 
+******************************************************************************************************************/
 void Application2D::SpawnObjects(std::shared_ptr<Object> object, int spawnCount)
 {
 	// get the current size of the dieing object and increase it for the spawn
@@ -303,35 +324,101 @@ void Application2D::SpawnObjects(std::shared_ptr<Object> object, int spawnCount)
 	}
 
 }
+/*****************************************************************************************************************
 
+******************************************************************************************************************/
 void Application2D::SaveGame()
 {
-	std::string savePath = "saves/game_save.xml";
-	
 	// clear game save
 	std::ofstream clearfile;
-	clearfile.open(savePath, std::ofstream::out | std::ofstream::trunc);
+	clearfile.open(SAVE_PATH, std::ofstream::out | std::ofstream::trunc);
 	clearfile.close();
+
 	// save new game
-	std::ofstream output(savePath, std::ofstream::app);
+	std::ofstream output(SAVE_PATH, std::ofstream::app);
+	// open save file
 	if (output.is_open())
 	{
-		output << m_scene->GetRoot()->SaveState().c_str();
+		// save root node state
+		output << m_scene->GetRoot()->SaveStateYAML();
+		// check if root node has children
+		if (!m_scene->GetRoot()->GetChildren().empty())
+		{
+			// iterate thorugh child node list and save state
+			for (std::list<SceneNode*>::const_iterator i = m_scene->GetRoot()->GetChildren().begin(), 
+													   i_end = m_scene->GetRoot()->GetChildren().end(); 
+													   i != i_end; i++)
+			{
+				output << (*i)->SaveStateYAML();
+			}
+		}
 	}
 	output.close();
 }
+/*****************************************************************************************************************
 
+******************************************************************************************************************/
 void Application2D::LoadGame()
 {
-	float c1x = 0.0f, float c1y = 0.0f, float c1z = 0.0f;
-	float c2x = 0.0f, float c2y = 0.0f, float c2z = 0.0f;
-	float c3x = 0.0f, float c3y = 0.0f, float c3z = 0.0f;
+	// set up root node transform names
+	std::string LT = m_scene->GetRoot()->GetNodeName() + std::string("LT");
+	std::string GT = m_scene->GetRoot()->GetNodeName() + std::string("GT");
+	
+	// set yaml node file location
+	YAML::Node gameSave = YAML::LoadFile(SAVE_PATH);
 
-	m_scene->GetRoot()->SetLocalTransform(c1x, c1y, c1z, c2x, c2y, c2z, c3x, c3y, c3z);
+	// load root node local transform
+	m_scene->GetRoot()->SetLocalTransform(gameSave[LT][0].as<float>(),
+										  gameSave[LT][1].as<float>(),
+										  gameSave[LT][2].as<float>(),
+										  gameSave[LT][3].as<float>(),
+										  gameSave[LT][4].as<float>(),
+										  gameSave[LT][5].as<float>(),
+										  gameSave[LT][6].as<float>(),
+										  gameSave[LT][7].as<float>(),
+										  gameSave[LT][8].as<float>());
+	// load root node global transform
+	m_scene->GetRoot()->SetGlobalTransform(gameSave[GT][0].as<float>(),
+										   gameSave[GT][1].as<float>(),
+										   gameSave[GT][2].as<float>(),
+										   gameSave[GT][3].as<float>(),
+										   gameSave[GT][4].as<float>(),
+										   gameSave[GT][5].as<float>(),
+										   gameSave[GT][6].as<float>(),
+										   gameSave[GT][7].as<float>(),
+										   gameSave[GT][8].as<float>());
 
-	c1x = 0.0f, c1y = 0.0f, c1z = 0.0f;
-	c2x = 0.0f, c2y = 0.0f, c2z = 0.0f;
-	c3x = 0.0f, c3y = 0.0f, c3z = 0.0f;
+	// check if root node has children
+	if (!m_scene->GetRoot()->GetChildren().empty())
+	{
+		// iterate through child snene nodes and update transforms
+		for (std::list<SceneNode*>::const_iterator i = m_scene->GetRoot()->GetChildren().begin(),
+			i_end = m_scene->GetRoot()->GetChildren().end();
+			i != i_end; i++)
+		{
+			std::string CLT = (*i)->GetNodeName() + std::string("LT");
+			std::string CGT = (*i)->GetNodeName() + std::string("GT");
 
-	m_scene->GetRoot()->SetLocalTransform(c1x, c1y, c1z, c2x, c2y, c2z, c3x, c3y, c3z);
+			// set child local transform
+			(*i)->SetLocalTransform(gameSave[CLT][0].as<float>(),
+									gameSave[CLT][1].as<float>(),
+									gameSave[CLT][2].as<float>(),
+									gameSave[CLT][3].as<float>(),
+									gameSave[CLT][4].as<float>(),
+									gameSave[CLT][5].as<float>(),
+									gameSave[CLT][6].as<float>(),
+									gameSave[CLT][7].as<float>(),
+									gameSave[CLT][8].as<float>());
+			// set child global transform
+			(*i)->SetGlobalTransform(gameSave[CGT][0].as<float>(),
+									 gameSave[CGT][1].as<float>(),
+									 gameSave[CGT][2].as<float>(),
+									 gameSave[CGT][3].as<float>(),
+									 gameSave[CGT][4].as<float>(),
+									 gameSave[CGT][5].as<float>(),
+									 gameSave[CGT][6].as<float>(),
+									 gameSave[CGT][7].as<float>(),
+									 gameSave[CGT][8].as<float>());
+		}
+	}
 }
