@@ -27,7 +27,8 @@ const int PLAYER_HEALTH = 100;
 const float PLAYER_START_X = 1000;
 const float PLAYER_START_Y = 100;
 
-const int OBJECT_COUNT = 10;
+const int OBJECT_COUNT = 1;
+const int OBJECT_MAX_COUNT = (OBJECT_COUNT * 3);
 const int OBJECT_SPAWN = 2;
 const int MAX_RESPAWN = 3;
 const float OBJECT_SIZE = 100;

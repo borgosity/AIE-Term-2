@@ -1,8 +1,10 @@
 #pragma once
+// std library includes
 #include <vector>
 #include <memory>
-
+// basic code includes
 #include "BaseApplication.h"
+// 
 #include "GameDef.h"
 
 class SpriteBatch;
@@ -16,16 +18,17 @@ class Scene;
 class Application2D : public BaseApplication {
 public:
 	static Application2D* getInstance();
-
+	//constructors
 	Application2D();
 	virtual ~Application2D();
-
+	// game start end
 	virtual bool startup();
 	virtual void shutdown();
-
+	// game updates
 	virtual bool update(float deltaTime);
 	virtual void draw();
 
+	// keypress
 	bool IsKeyDown(int key) { return BaseApplication::isKeyPressed(key); }
 
 	// evil object functions
@@ -39,12 +42,12 @@ public:
 	void LoadGame();
 
 protected:
-
+	// 
 	SpriteBatch*	m_spriteBatch;
 	Font*			m_font;
 	Scene*			m_scene;
 		
-	// player memeber variables
+	// player member variables
 	Player*			m_player;
 	Texture*		m_ptexture;
 	
@@ -61,14 +64,13 @@ protected:
 	Texture*		m_wtexture;
 	std::vector<std::shared_ptr<Wall>>	m_walls;
 
-	// gaem variables
+	// game state member variables
 	bool m_pause;
 	bool m_save;
 	bool m_newGame;
 	bool m_savedGame;
 	bool m_gameLoaded;
 	bool m_playing;
-
 
 private:
 	static Application2D* m_pInstance;

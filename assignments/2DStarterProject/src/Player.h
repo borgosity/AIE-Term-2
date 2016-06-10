@@ -12,10 +12,12 @@ class Wall;
 class Player : public SceneNode
 {
 public:
+	// constructors
 	Player();
 	Player(float size, float mass);
 	~Player();
 
+	// game updates
 	void Update(float dt);
 	void Draw(SpriteBatch* batch);
 	void Reset();
@@ -28,11 +30,15 @@ public:
 	bool IsColliding(std::shared_ptr<Object> object);
 	bool IsColliding(Object * object);
 	bool IsColliding(Vector3 * position);
+	bool Collided() { return m_collided; }
+	bool Collided(bool newValue) { m_collided = newValue; return m_collided; }
 
 	// collision resolution
 	void ApplyCollision(int damage);
 	void ApplyCollision(std::shared_ptr<Object> object);
 	void ApplyCollision(Object * object);
+	bool CollisionApplied() { return m_collisionApplied; }
+	bool CollisionApplied(bool newValue) { m_collisionApplied = newValue; return m_collisionApplied; }
 
 	// sets
 	void SetRotation(float rotate) { m_rotation += rotate; }
@@ -40,6 +46,7 @@ public:
 
 	// gets
 	Vector3 GetPosition() { return m_position; }
+	Vector3 Velocity() { return m_velocity; }
 	const float GetSize() { return m_currentSize; }
 	bool IsAlive() { return m_alive; }
 	int Score() { return m_points; }
@@ -84,9 +91,10 @@ private:
 	int m_prevDir;			// old direction checking
 	int m_xPlus;			// flag for checking if x is increasing (-1,0,1) -1 == (x == previous Value)
 	int m_yPlus;			// flag for checking if y is increasing (-1,0,1) -1 == (x == previous Value)
+	bool m_collided;		// flag to denote player has collided with something
+	bool m_collisionApplied;
 
 	// private member functions
-	int RandomDir();				// old generate direction function
 	void EdgeDectection();			// checks is player has reached the edge and adds the correct direction of rotation
 	void SlowDown(int extra = 0);	// slow player down, extra is a multiplier if needed
 	void Bounce(int extra = 0);		// speed player up after hitting something, extra is a multiplier if needed

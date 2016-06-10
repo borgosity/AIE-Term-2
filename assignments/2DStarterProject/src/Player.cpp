@@ -1,22 +1,23 @@
 #pragma once
-
+// std lib includes
 #include <random>
 #include <math.h>
 #include <string>
-
+// dependency includes
 #include <GLFW/glfw3.h>
-
-#include "Application2D.h"
-#include "Player.h"
-#include "GameDef.h"
+// basic code includes
 #include "Sprite.h"
-
 #include "SpriteBatch.h"
 #include "Texture.h"
 #include "Font.h"
+// my code includes
+#include "Application2D.h"
+#include "Player.h"
+#include "GameDef.h"
+
 
 /*****************************************************************************************************************
-
+	Default Player Constructor
 ******************************************************************************************************************/
 Player::Player()
 {
@@ -50,7 +51,7 @@ Player::Player()
 	m_spike4a = new Sprite("./bin/textures/tailBig.png");
 	AddChild(m_spike4a, m_spike4);
 
-	// set local transforms
+	// set local transforms for spikes
 	Matrix3 spike1(0); 
 	spike1.CreateTranslation(Vector3(0.0f, -75.0f, 1.0f));
 	m_spike1->SetLocalTransform(spike1);
@@ -68,7 +69,6 @@ Player::Player()
 	Matrix3 spike3(0); 
 	spike3.CreateTranslation(Vector3(-75.0f, 0.0f, 1.0f));
 	m_spike3->SetLocalTransform(spike3);
-	
 	Matrix3 spike3a(0); 
 	spike3a.CreateTranslation(Vector3(-25.0f, 0.0f, 1.0f));
 	m_spike3a->SetLocalTransform(spike3a);
@@ -80,7 +80,7 @@ Player::Player()
 	spike4a.CreateTranslation(Vector3(25.0f, 0.0f, 1.0f));
 	m_spike4a->SetLocalTransform(spike4a);
 
-	// set sprite names
+	// set spike sprite names
 	m_spike1->SetNodeName("m_spike1");
 	m_spike2->SetNodeName("m_spike2");
 	m_spike3->SetNodeName("m_spike3");
@@ -93,11 +93,12 @@ Player::Player()
 	// debug setup
 	m_fontDebug = new Font("./bin/font/consolas.ttf", 15);
 	m_debug = false;
+
 	// restet player
 	Reset();
 }
 /*****************************************************************************************************************
-
+	Player Constructor with size and mass parameter
 ******************************************************************************************************************/
 Player::Player(float size = 100.0f, float mass = 10.0f)
 {
@@ -131,7 +132,7 @@ Player::Player(float size = 100.0f, float mass = 10.0f)
 	m_spike4a = new Sprite("./bin/textures/tailBig.png", 50.0f, 50.0f, M_PI * 22.5f);
 	AddChild(m_spike4a, m_spike4);
 
-	// set local transforms
+	// set local transforms for spikes
 	Matrix3 spike1Trans(0);
 	spike1Trans.CreateTranslation(Vector3(0.0f, -75.0f, 1.0f));
 	m_spike1->SetLocalTransform(spike1Trans);
@@ -157,7 +158,7 @@ Player::Player(float size = 100.0f, float mass = 10.0f)
 	spike4.CreateTranslation(Vector3(75.0f, 0.0f, 1.0f));
 	m_spike4->SetLocalTransform(spike4);
 	Matrix3 spike4a(0);
-	spike4a.CreateTranslation(Vector3(25.0f, 0.0f, 1.0f));
+	spike4a.CreateTranslation(Vector3(25.0f, 0.0f, 0.3f));
 	m_spike4a->SetLocalTransform(spike4a);
 
 	// set sprite names
@@ -177,26 +178,32 @@ Player::Player(float size = 100.0f, float mass = 10.0f)
 	Reset();
 }
 /*****************************************************************************************************************
-
+	Player Destructor
 ******************************************************************************************************************/
 Player::~Player()
 {
+	// spikes destruction handled by Sprite class
 	delete m_playerSprite;
 	delete m_fontHUD;
 	delete m_fontDebug;
 }
 /*****************************************************************************************************************
-
+	Update Player Object
 ******************************************************************************************************************/
 void Player::Update(float dt)
 {
+	// if dead don't update anything
 	if (!m_alive)
 		return;
 	
+	// get instance of game
 	Application2D* app = Application2D::getInstance();
 
-	// reset rotation
+	// reset players rotation
 	m_rotation = 0;
+
+	// key press checks for player actions
+	//-------------------------------------------------
 	// key left 
 	if (app->IsKeyDown(GLFW_KEY_LEFT))
 	{
@@ -219,7 +226,7 @@ void Player::Update(float dt)
 	{
 		m_velocity.m_y += -SPEED;
 	}
-	// debug keypress
+	// toggle debug
 	if (app->IsKeyDown(GLFW_KEY_D))
 	{
 		if (m_debug)
@@ -232,7 +239,7 @@ void Player::Update(float dt)
 		}
 	}
 
-	// update spikes
+	// update players spikes
 	m_spike1->Update(dt);
 	m_spike1a->Update(dt);
 	m_spike2->Update(dt);
@@ -242,16 +249,14 @@ void Player::Update(float dt)
 	m_spike4->Update(dt);
 	m_spike4a->Update(dt);
 
-	//modify player based on rotation
+	// modify player based on rotation
 	Matrix3 mTranspose(0);
 	mTranspose.CreateTranslation(m_velocity.m_x * dt, m_velocity.m_y * dt, 1.0f);
 	Matrix3 mRotation(0);
 	mRotation.setRotateZ(m_rotation * (M_PI/45));
 
-	// rotate on local axis
+	// rotate player on local axis
 	m_local_transform = mTranspose * m_local_transform * mRotation;
-	// rotate on world axis
-	//m_local_transform = mTranpose * mRotation * m_local_transform;
 
 	// set postion information for edge detection
 	Vector3 position(m_local_transform.m_column3->m_x, m_local_transform.m_column3->m_y, m_local_transform.m_column3->m_z);
@@ -265,7 +270,7 @@ void Player::Update(float dt)
 
 }
 /*****************************************************************************************************************
-
+	Draw Player Objects 
 ******************************************************************************************************************/
 void Player::Draw(SpriteBatch * spriteBatch)
 {
@@ -317,9 +322,9 @@ void Player::Draw(SpriteBatch * spriteBatch)
 	}
 	//**********************************************************************************************************/
 }
-/***************************************************************************
-
-***************************************************************************/
+/*****************************************************************************************************************
+	Reset Player
+******************************************************************************************************************/
 void Player::Reset()
 {
 	// reset position and rotation
@@ -332,24 +337,29 @@ void Player::Reset()
 	m_velocity.m_x = 0;
 	m_velocity.m_y = 0;
 
+	// collision
+	m_collided = false;
+	m_collisionApplied = false;
+
 	// reset other vars
 	m_direction = 0;
 	m_currentSize = m_size;
 	m_health = PLAYER_HEALTH;
 	m_alive = true;
-}
-/***************************************************************************
 
-***************************************************************************/
+}
+/*****************************************************************************************************************
+	Reset Velocity
+******************************************************************************************************************/
 void Player::ResetVelocity()
 {
 	m_velocity.m_x = 0;
 	m_velocity.m_y = 0;
 	m_velocity.m_z = 0;
 }
-/***************************************************************************
-
-***************************************************************************/
+/*****************************************************************************************************************
+	Apply Collision Action(damage to inflict)
+******************************************************************************************************************/
 void Player::ApplyCollision(int damage)
 {
 	if (m_currentSize < (PLAYER_SIZE * 2) && m_currentSize > (PLAYER_SIZE / 2))
@@ -358,7 +368,7 @@ void Player::ApplyCollision(int damage)
 		{
 			m_currentSize += SIZE_PENALTY;
 			m_rotation += TURN_LEFT;
-			m_health -= damage/2;
+			m_health -= damage/10;
 		}
 		else
 		{
@@ -371,7 +381,7 @@ void Player::ApplyCollision(int damage)
 	{
 		if (m_health > 0)
 		{
-			m_health -= damage;
+			m_health -= damage/10;
 		}
 		else
 		{
@@ -384,25 +394,30 @@ void Player::ApplyCollision(int damage)
 		m_alive = false;
 		// play pop death sequence
 	}
+	// bounce player off object
+	if (m_velocity.m_x < 0)
+	{
+		m_velocity.m_x *= -1;
+	}
+	else
+	{
+		m_velocity.m_x = -m_velocity.m_x;
+	}
+	if (m_velocity.m_y < 0)
+	{
+		m_velocity.m_y *= -1;
+	}
+	else
+	{
+		m_velocity.m_y = -m_velocity.m_y;
+	}
+	m_collisionApplied = true;
 }
-
-/***************************************************************************
-
-***************************************************************************/
-int Player::RandomDir()
-{
-	std::default_random_engine generator;
-	std::uniform_int_distribution<int> distribution(1, 8);
-	int tempDir = distribution(generator);
-
-	return tempDir;
-}
-/***************************************************************************
-
-***************************************************************************/
+/*****************************************************************************************************************
+	Detect if Player is Out Side of Game Area
+******************************************************************************************************************/
 void Player::EdgeDectection()
 {
-	//m_rotation = 0;
 	Vector3 bump(2, 2, 0); // bump player off edge so they don't get stuck
 	// right/eastern edge check
 	if ((m_position.m_x + PLAYER_EDGE) >= SCREEN_W)
@@ -428,18 +443,17 @@ void Player::EdgeDectection()
 		m_position += bump;
 		Bounce(BOUNCE);
 	}
-
+	// if player manages to exist game space, reset
 	if (m_position.m_x > SCREEN_W || m_position.m_x < 0 || m_position.m_y > SCREEN_H || m_position.m_y < 0)
 	{
 		Reset();
 	}
 }
-/***************************************************************************
-
-***************************************************************************/
+/*****************************************************************************************************************
+	Apply Friction to Player
+******************************************************************************************************************/
 void Player::SlowDown(int extra)
 {
-
 	// moving east/right
 	if ((m_velocity.m_x -= m_mass + extra) < 0)
 	{
@@ -465,9 +479,9 @@ void Player::SlowDown(int extra)
 		return;
 	}
 }
-/***************************************************************************
-
-***************************************************************************/
+/*****************************************************************************************************************
+	Apply Bounce of a Boundary
+******************************************************************************************************************/
 void Player::Bounce(int extra)
 {
 	int x = 0;
@@ -494,8 +508,6 @@ void Player::Bounce(int extra)
 		x = m_position.m_x;
 		y = m_position.m_y;
 	}
-
-	
 	// if player is closer to the side than top/bottom do these
 	if (x <= y)
 	{

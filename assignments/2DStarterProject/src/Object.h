@@ -10,15 +10,16 @@ class Player;
 class Object : public SceneNode
 {
 public:
+	// constructors
 	Object();
 	Object(float size, Vector3 & location, float mass);
 	~Object();
 
 	// transform member functions
-	void SetPosition(Vector3 position);
-	void SetVelocity(Vector3 velocity);
+	void SetPosition(Vector3 position) { m_position = position; }
+	void SetVelocity(Vector3 velocity) { m_velocity = velocity; }
 	void ResetVelocity();
-	void DecreaseSpawns(int spawnNum = 1);
+	void DecreaseSpawns(int spawnNum = 1) { m_spawnNum -= spawnNum; }
 
 	// collision detection
 	bool IsColliding(std::shared_ptr<Object> object);
@@ -32,24 +33,23 @@ public:
 	void ApplyCollision(Player * player);
 
 	// gets 
-	Vector3 GetPosition();
-	const float GetSize();
-	bool IsAlive();
-	const int RespawnCount();
+	Vector3 GetPosition() { return m_position; }
+	const float GetSize() { return m_currentSize; }
+	bool IsAlive() { return m_alive; }
+	const int RespawnCount() { return m_respawnNum; }
 
+	// game updates
 	void Update(float dt);
 	void Draw(SpriteBatch* batch);
 	void Reset();
 
 private:
-	
 	// objects
 	Vector3 m_position;		// current position
 	Vector3 m_prevPos;		// last known position
 	float m_rotation;		// object rotation
 	Vector3 m_velocity;		// object velocity
 	float m_mass;			// object mass
-	
 
 	// objects vitals
 	float m_size;			// objects size
@@ -72,10 +72,7 @@ private:
 	int m_xPlus;			// flag for checking if x is increasing (-1,0,1) -1 == (x == previous Value)
 	int m_yPlus;			// flag for checking if y is increasing (-1,0,1) -1 == (x == previous Value)
 
-
 	// private member functions
-	int RandomDir();				// old generate direction function
-	void DirectionCheck();			// sets xPlus and yPlus flags
 	void EdgeDectection();			// checks is Object has reached the edge and adds the correct direction of rotation
 	void SlowDown(int extra = 0);	// slow Object down, extra is a multiplier if needed
 	void Bounce(int extra = 0);		// speed Object up after hitting something, extra is a multiplier if needed

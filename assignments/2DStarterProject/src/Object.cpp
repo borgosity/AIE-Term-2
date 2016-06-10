@@ -1,25 +1,24 @@
 #pragma once
-
+// std lib incudes
 #include <random>
 #include <math.h>
 #include <string>
-
+// dependecy includes
 #include <GLFW/glfw3.h>
-
+// basic code includes
+#include "SpriteBatch.h"
+#include "Texture.h"
+#include "Font.h"
+// my code includes
 #include "Application2D.h"
 #include "Object.h"
 #include "GameDef.h"
 #include "Player.h"
+#include "Collisions.h"
 
-#include "SpriteBatch.h"
-#include "Texture.h"
-#include "Font.h"
-
-
-
-#define M_PI       3.14159265358979323846   // pi
-
-
+/*****************************************************************************************************************
+	Default Object Constructor
+******************************************************************************************************************/
 Object::Object()
 {
 	m_objectSprite = new Texture("./bin/textures/object.png");
@@ -31,9 +30,10 @@ Object::Object()
 	m_alive = true;
 	m_spawnNum = OBJECT_SPAWN;
 	m_respawnNum = MAX_RESPAWN;
-	//Reset();
 }
-
+/*****************************************************************************************************************
+	Object Constructor with Size, Initial Location and Mass Parameters
+******************************************************************************************************************/
 Object::Object(float size, Vector3 & location, float mass)
 {
 	m_objectSprite = new Texture("./bin/textures/object.png");
@@ -46,16 +46,18 @@ Object::Object(float size, Vector3 & location, float mass)
 	m_alive = true;
 	m_spawnNum = OBJECT_SPAWN;
 	m_respawnNum = MAX_RESPAWN;
-	//Reset();
 }
-
-
+/*****************************************************************************************************************
+	Object Destructor
+******************************************************************************************************************/
 Object::~Object()
 {
 	delete m_objectSprite;
 	delete m_fontDebug;
 }
-
+/*****************************************************************************************************************
+	Update Object
+******************************************************************************************************************/
 void Object::Update(float dt)
 {
 	Application2D* app = Application2D::getInstance();
@@ -72,9 +74,6 @@ void Object::Update(float dt)
 		}
 	}
 
-	// check Objects movement and set flags
-	//DirectionCheck();
-
 	// check if Object has reached the edge of the game zone
 	//EdgeDectection();
 	
@@ -86,7 +85,9 @@ void Object::Update(float dt)
 	Vector3 v = m * m_velocity;
 	m_position += v * dt;
 }
-
+/*****************************************************************************************************************
+	Draw Objects
+******************************************************************************************************************/
 void Object::Draw(SpriteBatch * batch)
 {
 	Matrix3 transpose(0);
@@ -94,17 +95,9 @@ void Object::Draw(SpriteBatch * batch)
 	Matrix3 rotation(0);
 	rotation.setRotateZ(m_rotation);// *(M_PI / 2));
 	Matrix3 translation = transpose;
-	
-	//***************************************
-	// rotate around 0/0 world cordinates
-	//translation = rotation * transpose;
-	//batch->drawSpriteTransformed3x3(m_ObjectSprite, (float*)translation, 100, 100);
-	
-	//*************************************** 
+	 
 	//translation = transpose * rotation;
 	batch->drawSpriteTransformed3x3(m_objectSprite, (float*)translation, m_currentSize, m_currentSize);
-
-	//batch->drawSprite(m_objectSprite, m_position.m_x, m_position.m_y, m_size, m_size, 3.14159f * 0.25f);
 
 	//*********************************************************************************************************
 	// debugging
@@ -122,7 +115,9 @@ void Object::Draw(SpriteBatch * batch)
 	}
 	//**********************************************************************************************************/
 }
-
+/*****************************************************************************************************************
+	Reset Object
+******************************************************************************************************************/
 void Object::Reset()
 {
 	m_position.m_x = HALF_SW - 20;
@@ -135,93 +130,83 @@ void Object::Reset()
 	m_spawnNum = OBJECT_SPAWN;
 	m_respawnNum = MAX_RESPAWN;
 }
-
-void Object::SetPosition(Vector3 position)
-{
-	m_position = position;
-}
-
-void Object::SetVelocity(Vector3 velocity)
-{
-	m_velocity = velocity;
-}
-
+/*****************************************************************************************************************
+	Reset Velocity
+******************************************************************************************************************/
 void Object::ResetVelocity()
 {
 	m_velocity.m_x = 0;
 	m_velocity.m_y = 0;
 	m_velocity.m_z = 0;
 }
-
-void Object::DecreaseSpawns(int spawnNum)
-{
-	m_spawnNum -= spawnNum;
-}
-
-Vector3 Object::GetPosition()
-{
-	return m_position;
-}
-
-const float Object::GetSize()
-{
-	return m_currentSize;
-}
-
-bool Object::IsAlive()
-{
-	return m_alive;
-}
-
-const int Object::RespawnCount()
-{
-	return m_respawnNum;
-}
-
+/*****************************************************************************************************************
+	Is Object Coliding With Other Objects(shared_ptr)
+******************************************************************************************************************/
 bool Object::IsColliding(std::shared_ptr<Object> object)
 {
+	// sum of both radius
 	float radSum = (m_currentSize/2) + (object->m_currentSize/2);
 
+	// vector sum of object position minus player position
 	Vector3 vecSum = m_position;
 	vecSum -= object->GetPosition();
 
+	// vector magnitude of vector sum
 	float vecMag = vecSum.magnitude();
 
+	// return true if colliding and false if they aren't
 	return ((vecMag * vecMag) <= (radSum * radSum));
 }
-
+/*****************************************************************************************************************
+	Is Object Coliding With Other Objects(Object*)
+******************************************************************************************************************/
 bool Object::IsColliding(Object * object)
 {
+	// sum of both radius
 	float radSum = (m_currentSize/2) + (object->m_currentSize/2);
 	
+	// vector sum of object position minus player position
 	Vector3 vecSum = m_position;
 	vecSum -= object->GetPosition();
 
+	// vector magnitude of vector sum
 	float vecMag = vecSum.magnitude();
 
+	// return true if colliding and false if they aren't
 	return ((vecMag * vecMag) <= (radSum * radSum));
 }
-
+/*****************************************************************************************************************
+	Is Object Coliding With A  Certain Postion(Vector3*)
+******************************************************************************************************************/
 bool Object::IsColliding(Vector3 * position)
 {
 	return false;
 }
-
+/*****************************************************************************************************************
+	Is Object Coliding With The Player(Player*)
+******************************************************************************************************************/
 bool Object::IsColliding(Player * player)
 {
+	// sum of both radius
 	float radSum = (m_currentSize/2) + (player->GetSize()/2);
-
+	
+	// vector sum of object position minus player position
 	Vector3 vecSum = player->GetPosition();
 	vecSum -= m_position;
 
+	// vector magnitude of vector sum
 	float vecMag = vecSum.magnitude();
 
+	// return true if colliding and false if they aren't
 	return ((vecMag * vecMag) <= (radSum * radSum));
 
 }
-
+/*****************************************************************************************************************
+	Apply Collision With Other Objects(shared_ptr)
+******************************************************************************************************************/
 void Object::ApplyCollision(std::shared_ptr<Object> object)
 {
+	// apply results of collision
 	if (m_currentSize < (OBJECT_SIZE * 2) && m_currentSize > (OBJECT_SIZE / 2))
 	{
 		m_currentSize += SIZE_PENALTY;
@@ -234,63 +219,42 @@ void Object::ApplyCollision(std::shared_ptr<Object> object)
 	}
 
 }
-
+/*****************************************************************************************************************
+	Apply Collision With Player(Player*)
+******************************************************************************************************************/
 void Object::ApplyCollision(Player * player)
 {
-	if (m_currentSize < (OBJECT_SIZE * 2) && m_currentSize > (OBJECT_SIZE / 2))
+	// if object is the smae size or smaller than player then reduce in size
+	if (m_currentSize <= player->GetSize())
+	{
+		m_currentSize += SIZE_PENALTY;
+	}
+	// else if object is bigger then it can increase in size
+	else if (m_currentSize < (OBJECT_SIZE * 2) || m_currentSize > (OBJECT_SIZE / 2))
 	{
 		m_currentSize += SIZE_BONUS;
 	}
-	else if (m_currentSize >= (OBJECT_SIZE * 2))
+	// else if object is bigger than double it originl size it pops, or if it is to small it dies as well
+	else if (m_currentSize >= (OBJECT_SIZE * 2) || m_currentSize < (OBJECT_SIZE / 2))
 	{
 		m_alive = false;
 		// play pop death sequence
 	}
 	player->ApplyCollision((int)m_currentSize);
+	// apply collsion response
+	//Vector3 normal(((m_position.m_x + m_currentSize / 2) - (m_position.m_x - m_currentSize / 2)),
+	//			   ((m_position.m_x + m_currentSize / 2) - (m_position.m_x - m_currentSize / 2)),
+	//				1.0f);
+	////Vector3 normal = m_position;
+	////normal.normalise();
+	//Vector3 reflection = GetReflection(player->Velocity(), normal);
+	//m_position = reflection;
 }
-
-int Object::RandomDir()
-{
-	std::default_random_engine generator;
-	std::uniform_int_distribution<int> distribution(1, 8);
-	int tempDir = distribution(generator);
-
-	return tempDir;
-}
-
-void Object::DirectionCheck()
-{
-	// check current x position agianst previous x position and set flag
-	if (m_position.m_x > m_prevPos.m_x)
-	{
-		m_xPlus = 1;
-	}
-	else if (m_position.m_x < m_prevPos.m_x)
-	{
-		m_xPlus = 0;
-	}
-	else
-	{
-		m_xPlus = -1;
-	}
-	// check current y position agianst previous y position and set flag
-	if (m_position.m_y > m_prevPos.m_y)
-	{
-		m_yPlus = 1;
-	}
-	else if (m_position.m_y < m_prevPos.m_y)
-	{
-		m_yPlus = 0;
-	}
-	else
-	{
-		m_yPlus = -1;
-	}
-}
-
+/*****************************************************************************************************************
+	Detect if Object is Out Side of Game Area
+******************************************************************************************************************/
 void Object::EdgeDectection()
 {
-	//m_rotation = 0;
 	Vector3 bump(2, 2, 0); // bump Object off edge so they don't get stuck
 	// right/eastern edge check
 	if ((m_position.m_x + PLAYER_EDGE) >= SCREEN_W)
@@ -383,7 +347,9 @@ void Object::EdgeDectection()
 		Reset();
 	}
 }
-
+/*****************************************************************************************************************
+	Apply Friction to Object
+******************************************************************************************************************/
 void Object::SlowDown(int extra)
 {
 	if ((m_velocity.m_y -= m_mass + extra) < 0)
@@ -391,9 +357,68 @@ void Object::SlowDown(int extra)
 		m_velocity.m_y = 0;
 	}
 }
-
+/*****************************************************************************************************************
+	Apply Bounce of an Object
+******************************************************************************************************************/
 void Object::Bounce(int extra)
 {
-	m_velocity.m_y += m_mass + extra;
+	int x = 0;
+	int y = 0;
+
+	// clean up x/y values for location checks
+	if (m_position.m_x > HALF_SW && m_position.m_y > HALF_SH)
+	{
+		x = SCREEN_W - m_position.m_x;
+		y = SCREEN_H - m_position.m_y;
+	}
+	else if (m_position.m_x > HALF_SW && m_position.m_y <= HALF_SH)
+	{
+		x = SCREEN_W - m_position.m_x;
+		y = m_position.m_y;
+	}
+	else if (m_position.m_x <= HALF_SW && m_position.m_y > HALF_SH)
+	{
+		x = m_position.m_x;
+		y = SCREEN_H - m_position.m_y;
+	}
+	else
+	{
+		x = m_position.m_x;
+		y = m_position.m_y;
+	}
+	// if player is closer to the side than top/bottom do these
+	if (x <= y)
+	{
+		if (m_velocity.m_x > 0)
+		{
+			m_velocity.m_x = -m_velocity.m_x;
+			m_velocity.m_x += -(m_mass + extra);
+			return;
+		}
+
+		if (m_velocity.m_x < 0)
+		{
+			m_velocity.m_x *= -1;
+			m_velocity.m_x += (m_mass + extra);
+			return;
+		}
+	}
+	// else do one of these
+	if (y <= x)
+	{
+		if (m_velocity.m_y > 0 && m_velocity.m_y > m_velocity.m_x)
+		{
+			m_velocity.m_y = -m_velocity.m_y;
+			m_velocity.m_y += -(m_mass + extra);
+			return;
+		}
+
+		if (m_velocity.m_y < 0 && m_velocity.m_y < m_velocity.m_x)
+		{
+			m_velocity.m_y *= -1;
+			m_velocity.m_y += (m_mass + extra);
+			return;
+		}
+	}
 }
 
